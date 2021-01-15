@@ -23,6 +23,7 @@ SUBCOMMANDS:
     doc
     format
     help                Prints this message or the help of the subcommand(s)
+    init
     install
     test
 "#
@@ -54,6 +55,7 @@ SUBCOMMANDS:
         Some("clippy") => subcommand::cargo::clippy(&mut args, &cargo_args),
         Some("doc") => subcommand::cargo::doc(&mut args, &cargo_args),
         Some("format") => subcommand::cargo::format(&mut args, &cargo_args),
+        Some("init") => subcommand::cargo::init(&mut args),
         Some("install") => subcommand::cargo::install(&mut args, &cargo_args),
         Some("test") => subcommand::cargo::test(&mut args, &cargo_args),
         Some("udeps") => subcommand::cargo::udeps(&mut args, &cargo_args),
@@ -251,6 +253,45 @@ FLAGS:
             cmd.args(&["+nightly", "fmt", "--all"]);
             cmd.args(cargo_args);
             cmd.status()?;
+
+            Ok(())
+        }
+
+        // Run `cargo init` with custom options.
+        pub fn init(args: &mut pico_args::Arguments) -> crate::Fallible<()> {
+            let help = r#"
+xtask-init
+
+USAGE:
+    xtask init
+
+FLAGS:
+    -h, --help          Prints help information
+    -- '...'            Extra arguments to pass to the cargo command
+"#
+            .trim();
+
+            if args.contains(["-h", "--help"]) {
+                println!("{}\n", help);
+                return Ok(());
+            }
+
+            crate::util::handle_unused(args)?;
+
+            let status = {
+                let mut cmd = Command::new("npm");
+                cmd.args(&["ci"]);
+                cmd.status()?
+            };
+
+            if status.success() {
+                let assets_dir = format!("{}/../assets", env!("CARGO_MANIFEST_DIR"));
+                let assets_dir = std::path::Path::new(&assets_dir);
+                let mut cmd = Command::new("npx");
+                cmd.current_dir(assets_dir);
+                cmd.args(&["tree-sitter", "build-wasm", "../node_modules/tree-sitter-javascript"]);
+                cmd.status()?;
+            }
 
             Ok(())
         }
