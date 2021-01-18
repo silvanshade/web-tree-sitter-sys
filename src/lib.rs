@@ -1,6 +1,6 @@
 mod parser {
-    use js_sys::{Function, JsString, Object, Promise};
-    use wasm_bindgen::prelude::*;
+    use js_sys::{Array, Function, JsString, Object, Promise, Reflect};
+    use wasm_bindgen::{prelude::*, JsCast};
 
     #[wasm_bindgen(module = "web-tree-sitter")]
     extern {
@@ -29,13 +29,53 @@ mod parser {
         pub fn new_end_position(this: &Edit) -> Point;
     }
 
+    impl Edit {
+        pub fn new(
+            start_index: u32,
+            old_end_index: u32,
+            new_end_index: u32,
+            start_position: Point,
+            old_end_position: Point,
+            new_end_position: Point,
+        ) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"start_index".into(), &start_index.into()).unwrap();
+            Reflect::set(&obj, &"old_end_index".into(), &old_end_index.into()).unwrap();
+            Reflect::set(&obj, &"new_end_index".into(), &new_end_index.into()).unwrap();
+            Reflect::set(&obj, &"start_position".into(), &start_position.into()).unwrap();
+            Reflect::set(&obj, &"old_end_position".into(), &old_end_position.into()).unwrap();
+            Reflect::set(&obj, &"new_end_position".into(), &new_end_position.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
+    }
+
     pub type Input = Function;
+
+    pub type InputClosureType = dyn FnMut(u32, Option<Point>, Option<u32>) -> Option<JsString>;
 
     pub type Logger = Function;
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    pub type LoggerClosureType = dyn FnMut(JsString, LoggerParams, JsString);
+
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
+        #[wasm_bindgen(extends = Object)]
+        pub type LoggerParams;
+
+        #[wasm_bindgen(method, indexing_getter)]
+        fn get(this: &LoggerParams, key: &JsString) -> JsString;
+
+        #[wasm_bindgen(method, indexing_setter)]
+        fn set(this: &LoggerParams, val: &JsString);
+
+        #[wasm_bindgen(method, indexing_deleter)]
+        fn delete(this: &LoggerParams, val: &JsString);
+    }
+
+    #[wasm_bindgen(module = "web-tree-sitter")]
+    extern {
+        #[derive(Clone, Debug, PartialEq)]
         pub type Language;
 
         // Static Methods
@@ -73,7 +113,15 @@ mod parser {
 
         // -> Range[]
         #[wasm_bindgen(method, getter, js_name = includedRanges)]
-        pub fn included_ranges(this: &Options) -> Option<Box<[JsValue]>>;
+        pub fn included_ranges(this: &Options) -> Option<Array>;
+    }
+
+    impl Options {
+        pub fn new(included_ranges: Option<Array>) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"included_ranges".into(), &included_ranges.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
     }
 
     #[wasm_bindgen(module = "web-tree-sitter")]
@@ -89,6 +137,15 @@ mod parser {
 
         #[wasm_bindgen(method, getter)]
         pub fn column(this: &Point) -> u32;
+    }
+
+    impl Point {
+        pub fn new(row: Point, column: Point) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"row".into(), &row.into()).unwrap();
+            Reflect::set(&obj, &"column".into(), &column.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
     }
 
     #[wasm_bindgen(module = "web-tree-sitter")]
@@ -122,6 +179,7 @@ mod parser {
         #[wasm_bindgen(method)]
         pub fn delete(this: &Query);
 
+        // -> QueryMatch[]
         #[wasm_bindgen(method)]
         pub fn matches(
             this: &Query,
@@ -130,6 +188,7 @@ mod parser {
             end_position: Option<&Point>,
         ) -> Box<[JsValue]>;
 
+        // -> QueryCapture[]
         #[wasm_bindgen(method)]
         pub fn captures(
             this: &Query,
@@ -137,6 +196,10 @@ mod parser {
             start_position: Option<&Point>,
             end_position: Option<&Point>,
         ) -> Box<[JsValue]>;
+
+        // -> PredicateResult[]
+        #[wasm_bindgen(js_name = predicatesForPattern)]
+        pub fn predicates_for_pattern(this: &Query, pattern_index: u32) -> Box<[JsValue]>;
     }
 
     #[wasm_bindgen(module = "web-tree-sitter")]
@@ -189,6 +252,17 @@ mod parser {
 
         #[wasm_bindgen(method, getter, js_name = endIndex)]
         pub fn end_index(this: &Range) -> u32;
+    }
+
+    impl Range {
+        pub fn new(start_position: &Point, end_position: &Point, start_index: u32, end_index: u32) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"start_position".into(), &start_position.into()).unwrap();
+            Reflect::set(&obj, &"end_position".into(), &end_position.into()).unwrap();
+            Reflect::set(&obj, &"start_index".into(), &start_index.into()).unwrap();
+            Reflect::set(&obj, &"end_index".into(), &end_index.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
     }
 
     #[wasm_bindgen(module = "web-tree-sitter")]
@@ -433,6 +507,7 @@ mod parser {
 }
 
 use js_sys::{JsString, Promise};
+pub use parser::*;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen(module = "web-tree-sitter")]
@@ -445,6 +520,11 @@ extern {
     // -> Promise<void>
     #[wasm_bindgen(static_method_of = Parser)]
     pub fn init() -> Promise;
+
+    // Constructor
+
+    #[wasm_bindgen(constructor)]
+    pub fn new() -> Parser;
 
     // Instance Methods
 
@@ -468,14 +548,14 @@ extern {
     ) -> parser::Tree;
 
     #[wasm_bindgen(method, js_name = getLanguage)]
-    pub fn get_language(this: &Parser) -> parser::Language;
+    pub fn get_language(this: &Parser) -> Option<parser::Language>;
 
     #[wasm_bindgen(method, js_name = setLanguage)]
-    pub fn set_language(this: &Parser, language: &parser::Language);
+    pub fn set_language(this: &Parser, language: Option<&parser::Language>);
 
     #[wasm_bindgen(method, js_name = getLogger)]
-    pub fn get_logger(this: &Parser) -> parser::Logger;
+    pub fn get_logger(this: &Parser) -> Option<parser::Logger>;
 
     #[wasm_bindgen(method, js_name = setLogger)]
-    pub fn set_logger(this: &Parser, logger: &parser::Logger);
+    pub fn set_logger(this: &Parser, logger: Option<&parser::Logger>);
 }
