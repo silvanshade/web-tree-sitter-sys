@@ -140,7 +140,7 @@ mod parser {
     }
 
     impl Point {
-        pub fn new(row: Point, column: Point) -> Self {
+        pub fn new(row: u32, column: u32) -> Self {
             let obj = Object::new();
             Reflect::set(&obj, &"row".into(), &row.into()).unwrap();
             Reflect::set(&obj, &"column".into(), &column.into()).unwrap();
