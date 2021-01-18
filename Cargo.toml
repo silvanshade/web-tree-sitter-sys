@@ -35,16 +35,14 @@ default = ["wee_alloc"]
 
 [dependencies]
 js-sys = "0.3"
+wasm-bindgen = { version = "0.2", features = ["strict-macro"] }
 wee_alloc = { version = "0.4", optional = true }
-
-[dependencies.wasm-bindgen]
-version = "0.2"
-features = ["strict-macro"]
 
 [dependencies.web-sys]
 version = "0.3"
 
 [dev-dependencies]
+wasm-bindgen-futures = "0.4"
 wasm-bindgen-test = "0.3"
 
 [workspace]
