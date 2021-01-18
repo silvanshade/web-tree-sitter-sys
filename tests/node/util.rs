@@ -43,7 +43,7 @@ pub(crate) mod language {
     pub(crate) async fn load() -> Result<Language, JsValue> {
         let id = "javascript";
         let url = crate::util::language::url(id);
-        let url = url.expect(&format!("failed to obtain url for language '{}'", id));
+        let url = url.unwrap_or_else(|_| panic!("failed to obtain url for language '{}'", id));
         let language = JsFuture::from(Language::load(&url)).await?;
         let language = language.unchecked_into::<Language>();
         Ok(language)
