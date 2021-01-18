@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "web-tree-sitter": "^0.18.0"
+    "web-tree-sitter": "file:///../../tree-sitter/lib/binding_web"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.18.0",
