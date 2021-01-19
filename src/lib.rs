@@ -555,9 +555,6 @@ mod parser {
         pub fn get_changed_ranges(this: &Tree, other: &Tree) -> Box<[JsValue]>;
 
         #[wasm_bindgen(method)]
-        pub fn get_edited_ranges(this: &Tree, other: &Tree) -> Range;
-
-        #[wasm_bindgen(method)]
         pub fn get_language(this: &Tree) -> Language;
     }
 
@@ -611,9 +608,6 @@ mod parser {
 
         #[wasm_bindgen(method, js_name = gotoFirstChild)]
         pub fn goto_first_child(this: &TreeCursor) -> bool;
-
-        #[wasm_bindgen(method, js_name = gotoFirstChildForIndex)]
-        pub fn goto_first_child_for_index(this: &TreeCursor, index: u32) -> bool;
 
         #[wasm_bindgen(method, js_name = gotoNextSibling)]
         pub fn goto_next_sibling(this: &TreeCursor) -> bool;
