@@ -160,7 +160,7 @@ mod parser {
         #[wasm_bindgen(method, getter)]
         pub fn operator(this: &PredicateResult) -> String;
 
-        // -> { name: string; type: string }[]
+        // -> PredicateOperand[]
         #[wasm_bindgen(method, getter)]
         pub fn operands(this: &PredicateResult) -> Box<[JsValue]>;
     }
@@ -172,6 +172,7 @@ mod parser {
 
         // Instance Properties
 
+        // -> JsString[]
         #[wasm_bindgen(method, getter, js_name = captureNames)]
         pub fn capture_names(this: &Query) -> Box<[JsValue]>;
 
