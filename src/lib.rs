@@ -225,7 +225,7 @@ mod parser {
         // Instance Properties
 
         #[wasm_bindgen(method, getter)]
-        pub fn operator(this: &PredicateResult) -> String;
+        pub fn operator(this: &PredicateResult) -> JsString;
 
         // -> PredicateOperand[]
         #[wasm_bindgen(method, getter)]
@@ -297,7 +297,7 @@ mod parser {
         // Instance Properties
 
         #[wasm_bindgen(method, getter)]
-        pub fn name(this: &QueryCapture) -> String;
+        pub fn name(this: &QueryCapture) -> JsString;
 
         #[wasm_bindgen(method, getter)]
         pub fn node(this: &QueryCapture) -> SyntaxNode;
