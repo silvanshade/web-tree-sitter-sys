@@ -9,17 +9,17 @@ async fn init() {
         crate::util::parser::init().await?;
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
 async fn new() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let _ = Parser::new();
+        let _parser = Parser::new();
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
@@ -30,7 +30,7 @@ async fn delete() {
         parser.delete();
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
@@ -39,7 +39,7 @@ async fn parse_with_function() {
         crate::util::parser::init().await?;
         let parser = Parser::new();
         let language = crate::util::language::load().await?;
-        parser.set_language(Some(&language));
+        parser.set_language(Some(&language))?;
         let clo = Closure::wrap(Box::new(move |_, _, _| None) as Box<InputClosureType>);
         let _tree = {
             let input = clo.as_ref().unchecked_ref::<Function>();
@@ -50,7 +50,7 @@ async fn parse_with_function() {
         clo.forget();
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
@@ -59,7 +59,7 @@ async fn parse_with_string() {
         crate::util::parser::init().await?;
         let parser = Parser::new();
         let language = crate::util::language::load().await?;
-        parser.set_language(Some(&language));
+        parser.set_language(Some(&language))?;
         let _tree = {
             let input = String::new().into();
             let previous_tree = Default::default();
@@ -68,7 +68,7 @@ async fn parse_with_string() {
         };
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
@@ -78,15 +78,15 @@ async fn set_get_language() {
         let parser = Parser::new();
         let language = crate::util::language::load().await?;
 
-        parser.set_language(Some(&language));
+        parser.set_language(Some(&language))?;
         assert_eq!(Some(language), parser.get_language());
 
-        parser.set_language(None);
+        parser.set_language(None)?;
         assert_eq!(None, parser.get_language());
 
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
@@ -95,7 +95,7 @@ async fn set_get_logger() {
         crate::util::parser::init().await?;
         let parser = Parser::new();
         let language = crate::util::language::load().await?;
-        parser.set_language(Some(&language));
+        parser.set_language(Some(&language))?;
 
         let clo = Closure::wrap(Box::new(move |_, _, _| {}) as Box<LoggerClosureType>);
         let logger = clo.as_ref().unchecked_ref::<Function>();
@@ -107,5 +107,5 @@ async fn set_get_logger() {
 
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
