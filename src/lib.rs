@@ -496,6 +496,14 @@ mod parser {
             end_position: Option<&Point>,
         ) -> Box<[JsValue]>;
 
+        #[wasm_bindgen(method, js_name = descendantsOfType)]
+        pub fn descendants_of_type_array(
+            this: &SyntaxNode,
+            type_: Box<[JsValue]>,
+            start_position: Option<&Point>,
+            end_position: Option<&Point>,
+        ) -> Box<[JsValue]>;
+
         #[wasm_bindgen(method, js_name = namedDescendantForIndex)]
         pub fn named_descendant_for_index(this: &SyntaxNode, index: u32) -> Option<SyntaxNode>;
 
