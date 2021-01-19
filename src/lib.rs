@@ -488,8 +488,8 @@ mod parser {
         pub fn descendant_for_index_range(this: &SyntaxNode, start_index: u32, end_index: u32) -> Option<SyntaxNode>;
 
         // -> SyntaxNode[]
-        #[wasm_bindgen(method, js_name = descendantOfType)]
-        pub fn descendant_of_type_string(
+        #[wasm_bindgen(method, js_name = descendantsOfType)]
+        pub fn descendants_of_type_string(
             this: &SyntaxNode,
             type_: &str,
             start_position: Option<&Point>,
