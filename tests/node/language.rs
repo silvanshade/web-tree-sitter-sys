@@ -5,30 +5,85 @@ use wasm_bindgen_test::*;
 async fn load() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        crate::util::language::load().await.unwrap();
+        crate::util::language::load().await?;
         Ok(())
     }
-    inner().await.unwrap();
-}
-
-#[wasm_bindgen_test]
-async fn field_count() {
-    async fn inner() -> Result<(), JsValue> {
-        crate::util::parser::init().await?;
-        let language = crate::util::language::load().await.unwrap();
-        assert_eq!(34, language.field_count());
-        Ok(())
-    }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
 async fn version() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let language = crate::util::language::load().await.unwrap();
+        let language = crate::util::language::load().await?;
         assert_eq!(11, language.version());
         Ok(())
     }
-    inner().await.unwrap();
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn field_count() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        assert_eq!(34, language.field_count());
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn field_name_for_id() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let name = language.field_id_for_name("alias");
+        assert_eq!(Some(1), name);
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn field_id_for_name() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let id = language.field_name_for_id(1);
+        assert_eq!(Some("alias".into()), id);
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn query() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let query = r###"
+        (function_declaration name: (identifier) @fn-def)
+        (call_expression function: (identifier) @fn-ref)
+        "###
+        .into();
+        language.query(&query)?;
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn query_throws() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let query = r###"
+        (function_declaration wat)
+        "###
+        .into();
+        let _query = language.query(&query)?;
+        Ok(())
+    }
+    assert!(inner().await.is_err());
 }

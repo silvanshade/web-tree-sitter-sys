@@ -3,7 +3,7 @@ use wasm_bindgen_test::*;
 use web_tree_sitter_sys::*;
 
 #[wasm_bindgen_test]
-async fn operator() {
+async fn name() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let parser = Parser::new();
@@ -25,14 +25,16 @@ async fn operator() {
         // FIXME: check output
         let predicates = query.predicates_for_pattern(1);
         let predicate = predicates[0].unchecked_ref::<PredicateResult>();
-        let _operator = predicate.operator();
+        let operands = predicate.operands();
+        let operand = operands[0].unchecked_ref::<PredicateOperand>();
+        let _ = operand.name();
         Ok(())
     }
     assert!(inner().await.is_ok());
 }
 
 #[wasm_bindgen_test]
-async fn operands() {
+async fn type_() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let parser = Parser::new();
@@ -54,7 +56,9 @@ async fn operands() {
         // FIXME: check output
         let predicates = query.predicates_for_pattern(1);
         let predicate = predicates[0].unchecked_ref::<PredicateResult>();
-        let _operands = predicate.operands();
+        let operands = predicate.operands();
+        let operand = operands[0].unchecked_ref::<PredicateOperand>();
+        let _ = operand.type_();
         Ok(())
     }
     assert!(inner().await.is_ok());
