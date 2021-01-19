@@ -101,8 +101,8 @@ mod parser {
         #[wasm_bindgen(method, js_name = fieldIdForName)]
         pub fn field_id_for_name(this: &Language, field_name: &str) -> Option<u32>;
 
-        #[wasm_bindgen(method)]
-        pub fn query(this: &Language, source: &JsString) -> Query;
+        #[wasm_bindgen(catch, method)]
+        pub fn query(this: &Language, source: &JsString) -> Result<Query, JsValue>;
     }
 
     #[wasm_bindgen(module = "web-tree-sitter")]
@@ -551,8 +551,8 @@ extern {
     #[wasm_bindgen(method, js_name = getLanguage)]
     pub fn get_language(this: &Parser) -> Option<parser::Language>;
 
-    #[wasm_bindgen(method, js_name = setLanguage)]
-    pub fn set_language(this: &Parser, language: Option<&parser::Language>);
+    #[wasm_bindgen(catch, method, js_name = setLanguage)]
+    pub fn set_language(this: &Parser, language: Option<&parser::Language>) -> Result<(), JsValue>;
 
     #[wasm_bindgen(method, js_name = getLogger)]
     pub fn get_logger(this: &Parser) -> Option<parser::Logger>;
