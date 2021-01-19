@@ -109,15 +109,16 @@ mod parser {
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
-        pub type Options;
+        pub type ParseOptions;
 
         // Instance Properties
 
         // -> Range[]
         #[wasm_bindgen(method, getter, js_name = includedRanges)]
-        pub fn included_ranges(this: &Options) -> Option<Array>;
+        pub fn included_ranges(this: &ParseOptions) -> Option<Array>;
     }
 
+    impl ParseOptions {
         pub fn new(included_ranges: Option<&Array>) -> Self {
             let obj = Object::new();
             Reflect::set(&obj, &"includedRanges".into(), &included_ranges.into()).unwrap();
@@ -538,16 +539,14 @@ extern {
         this: &Parser,
         input: &parser::Input,
         previous_tree: Option<&parser::Tree>,
-        options: Option<&parser::Options>,
-    ) -> parser::Tree;
+        options: Option<&parser::ParseOptions>,
 
     #[wasm_bindgen(method, js_name = parse)]
     pub fn parse_with_string(
         this: &Parser,
         input: &JsString,
         previous_tree: Option<&parser::Tree>,
-        options: Option<&parser::Options>,
-    ) -> parser::Tree;
+        options: Option<&parser::ParseOptions>,
 
     #[wasm_bindgen(method, js_name = getLanguage)]
     pub fn get_language(this: &Parser) -> Option<parser::Language>;
