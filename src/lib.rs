@@ -200,7 +200,7 @@ mod parser {
         ) -> Box<[JsValue]>;
 
         // -> PredicateResult[]
-        #[wasm_bindgen(js_name = predicatesForPattern)]
+        #[wasm_bindgen(method, js_name = predicatesForPattern)]
         pub fn predicates_for_pattern(this: &Query, pattern_index: u32) -> Box<[JsValue]>;
     }
 
