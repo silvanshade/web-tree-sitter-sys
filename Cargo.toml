@@ -18,15 +18,15 @@ crate-type = ["cdylib", "rlib"]
 doctest = false
 test = false
 
-[profile.dev]
-codegen-units = 1
-lto = true
-opt-level = 'z'
-panic = 'abort'
+# [profile.dev]
+# codegen-units = 1
+# lto = "thin"
+# opt-level = 'z'
+# panic = 'abort'
 
 [profile.release]
 codegen-units = 1
-lto = true
+lto = "fat"
 opt-level = 'z'
 panic = 'abort'
 
