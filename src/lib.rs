@@ -188,6 +188,38 @@ mod parser {
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
+        pub type PredicateOperand;
+
+        // Instance Properties
+
+        #[wasm_bindgen(method, getter)]
+        pub fn name(this: &PredicateOperand) -> JsString;
+
+        #[wasm_bindgen(method, getter)]
+        pub fn type_(this: &PredicateOperand) -> JsString;
+    }
+
+    impl PredicateOperand {
+        pub fn new(type_: &JsString, name: &JsString) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"type".into(), &type_.into()).unwrap();
+            Reflect::set(&obj, &"name".into(), &name.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
+    }
+
+    impl Default for PredicateOperand {
+        fn default() -> Self {
+            let name = &<String as Default>::default().into();
+            let type_ = &<String as Default>::default().into();
+            Self::new(name, type_)
+        }
+    }
+
+    #[wasm_bindgen]
+    extern {
+        #[derive(Clone, Debug)]
+        #[wasm_bindgen(extends = Object)]
         pub type PredicateResult;
 
         // Instance Properties
