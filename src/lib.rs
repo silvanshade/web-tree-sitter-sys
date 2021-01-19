@@ -36,9 +36,9 @@ mod parser {
             start_index: u32,
             old_end_index: u32,
             new_end_index: u32,
-            start_position: Point,
-            old_end_position: Point,
-            new_end_position: Point,
+            start_position: &Point,
+            old_end_position: &Point,
+            new_end_position: &Point,
         ) -> Self {
             let obj = Object::new();
             Reflect::set(&obj, &"startIndex".into(), &start_index.into()).unwrap();
@@ -118,8 +118,7 @@ mod parser {
         pub fn included_ranges(this: &Options) -> Option<Array>;
     }
 
-    impl Options {
-        pub fn new(included_ranges: Option<Array>) -> Self {
+        pub fn new(included_ranges: Option<&Array>) -> Self {
             let obj = Object::new();
             Reflect::set(&obj, &"includedRanges".into(), &included_ranges.into()).unwrap();
             JsCast::unchecked_into(obj)
