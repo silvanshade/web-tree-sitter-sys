@@ -4,7 +4,7 @@ mod parser {
     use js_sys::{Array, Function, JsString, Object, Promise, Reflect};
     use wasm_bindgen::{prelude::*, JsCast};
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
@@ -105,7 +105,7 @@ mod parser {
         pub fn query(this: &Language, source: &JsString) -> Result<Query, JsValue>;
     }
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
@@ -125,7 +125,7 @@ mod parser {
         }
     }
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
@@ -149,7 +149,7 @@ mod parser {
         }
     }
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
@@ -165,7 +165,7 @@ mod parser {
         pub fn operands(this: &PredicateResult) -> Box<[JsValue]>;
     }
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         pub type Query;
@@ -204,7 +204,7 @@ mod parser {
         pub fn predicates_for_pattern(this: &Query, pattern_index: u32) -> Box<[JsValue]>;
     }
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
@@ -219,7 +219,7 @@ mod parser {
         pub fn node(this: &QueryCapture) -> SyntaxNode;
     }
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
@@ -235,7 +235,7 @@ mod parser {
         pub fn captures(this: &QueryMatch) -> Box<[JsValue]>;
     }
 
-    #[wasm_bindgen(module = "web-tree-sitter")]
+    #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
         #[wasm_bindgen(extends = Object)]
