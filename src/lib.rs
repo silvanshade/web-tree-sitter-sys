@@ -41,12 +41,12 @@ mod parser {
             new_end_position: Point,
         ) -> Self {
             let obj = Object::new();
-            Reflect::set(&obj, &"start_index".into(), &start_index.into()).unwrap();
-            Reflect::set(&obj, &"old_end_index".into(), &old_end_index.into()).unwrap();
-            Reflect::set(&obj, &"new_end_index".into(), &new_end_index.into()).unwrap();
-            Reflect::set(&obj, &"start_position".into(), &start_position.into()).unwrap();
-            Reflect::set(&obj, &"old_end_position".into(), &old_end_position.into()).unwrap();
-            Reflect::set(&obj, &"new_end_position".into(), &new_end_position.into()).unwrap();
+            Reflect::set(&obj, &"startIndex".into(), &start_index.into()).unwrap();
+            Reflect::set(&obj, &"oldEndIndex".into(), &old_end_index.into()).unwrap();
+            Reflect::set(&obj, &"newEndIndex".into(), &new_end_index.into()).unwrap();
+            Reflect::set(&obj, &"startPosition".into(), &start_position.into()).unwrap();
+            Reflect::set(&obj, &"oldEndPosition".into(), &old_end_position.into()).unwrap();
+            Reflect::set(&obj, &"newEndPosition".into(), &new_end_position.into()).unwrap();
             JsCast::unchecked_into(obj)
         }
     }
@@ -121,7 +121,7 @@ mod parser {
     impl Options {
         pub fn new(included_ranges: Option<Array>) -> Self {
             let obj = Object::new();
-            Reflect::set(&obj, &"included_ranges".into(), &included_ranges.into()).unwrap();
+            Reflect::set(&obj, &"includedRanges".into(), &included_ranges.into()).unwrap();
             JsCast::unchecked_into(obj)
         }
     }
@@ -259,10 +259,10 @@ mod parser {
     impl Range {
         pub fn new(start_position: &Point, end_position: &Point, start_index: u32, end_index: u32) -> Self {
             let obj = Object::new();
-            Reflect::set(&obj, &"start_position".into(), &start_position.into()).unwrap();
-            Reflect::set(&obj, &"end_position".into(), &end_position.into()).unwrap();
-            Reflect::set(&obj, &"start_index".into(), &start_index.into()).unwrap();
-            Reflect::set(&obj, &"end_index".into(), &end_index.into()).unwrap();
+            Reflect::set(&obj, &"startPosition".into(), &start_position.into()).unwrap();
+            Reflect::set(&obj, &"endPosition".into(), &end_position.into()).unwrap();
+            Reflect::set(&obj, &"startIndex".into(), &start_index.into()).unwrap();
+            Reflect::set(&obj, &"endIndex".into(), &end_index.into()).unwrap();
             JsCast::unchecked_into(obj)
         }
     }
