@@ -51,6 +51,25 @@ mod parser {
         }
     }
 
+    impl Default for Edit {
+        fn default() -> Self {
+            let start_index = Default::default();
+            let old_end_index = Default::default();
+            let new_end_index = Default::default();
+            let start_position = &Default::default();
+            let old_end_position = &Default::default();
+            let new_end_position = &Default::default();
+            Self::new(
+                start_index,
+                old_end_index,
+                new_end_index,
+                start_position,
+                old_end_position,
+                new_end_position,
+            )
+        }
+    }
+
     pub type Input = Function;
 
     pub type InputClosureType = dyn FnMut(u32, Option<Point>, Option<u32>) -> Option<JsString>;
@@ -126,6 +145,13 @@ mod parser {
         }
     }
 
+    impl Default for ParseOptions {
+        fn default() -> Self {
+            let included_ranges = Default::default();
+            Self::new(included_ranges)
+        }
+    }
+
     #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
@@ -150,6 +176,14 @@ mod parser {
         }
     }
 
+    impl Default for Point {
+        fn default() -> Self {
+            let row = Default::default();
+            let column = Default::default();
+            Self::new(row, column)
+        }
+    }
+
     #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
@@ -164,6 +198,23 @@ mod parser {
         // -> PredicateOperand[]
         #[wasm_bindgen(method, getter)]
         pub fn operands(this: &PredicateResult) -> Box<[JsValue]>;
+    }
+
+    impl PredicateResult {
+        pub fn new(operator: &JsString, operands: &Array) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"operator".into(), &operator.into()).unwrap();
+            Reflect::set(&obj, &"operands".into(), &operands.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
+    }
+
+    impl Default for PredicateResult {
+        fn default() -> Self {
+            let operator = &<String as Default>::default().into();
+            let operands = &<Vec<JsValue> as Default>::default().into_iter().collect();
+            Self::new(operator, operands)
+        }
     }
 
     #[wasm_bindgen]
@@ -220,6 +271,15 @@ mod parser {
         pub fn node(this: &QueryCapture) -> SyntaxNode;
     }
 
+    impl QueryCapture {
+        pub fn new(name: &JsString, node: &SyntaxNode) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"name".into(), &name.into()).unwrap();
+            Reflect::set(&obj, &"node".into(), &node.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
+    }
+
     #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug)]
@@ -234,6 +294,15 @@ mod parser {
         // -> QueryCapture[]
         #[wasm_bindgen(method, getter)]
         pub fn captures(this: &QueryMatch) -> Box<[JsValue]>;
+    }
+
+    impl QueryMatch {
+        pub fn new(pattern: u32, captures: &Array) -> Self {
+            let obj = Object::new();
+            Reflect::set(&obj, &"pattern".into(), &pattern.into()).unwrap();
+            Reflect::set(&obj, &"captures".into(), &captures.into()).unwrap();
+            JsCast::unchecked_into(obj)
+        }
     }
 
     #[wasm_bindgen]
@@ -265,6 +334,16 @@ mod parser {
             Reflect::set(&obj, &"startIndex".into(), &start_index.into()).unwrap();
             Reflect::set(&obj, &"endIndex".into(), &end_index.into()).unwrap();
             JsCast::unchecked_into(obj)
+        }
+    }
+
+    impl Default for Range {
+        fn default() -> Range {
+            let start_position = Default::default();
+            let end_position = Default::default();
+            let start_index = Default::default();
+            let end_index = Default::default();
+            Self::new(&start_position, &end_position, start_index, end_index)
         }
     }
 
