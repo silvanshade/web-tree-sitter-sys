@@ -551,10 +551,10 @@ mod parser {
         pub fn walk(this: &Tree) -> TreeCursor;
 
         // -> Range[]
-        #[wasm_bindgen(method)]
+        #[wasm_bindgen(method, js_name = getChangedRanges)]
         pub fn get_changed_ranges(this: &Tree, other: &Tree) -> Box<[JsValue]>;
 
-        #[wasm_bindgen(method)]
+        #[wasm_bindgen(method, js_name = getLanguage)]
         pub fn get_language(this: &Tree) -> Language;
     }
 
@@ -580,10 +580,10 @@ mod parser {
         #[wasm_bindgen(method, getter, js_name = endPosition)]
         pub fn end_position(this: &TreeCursor) -> Point;
 
-        #[wasm_bindgen(method, getter, js_name = startPosition)]
+        #[wasm_bindgen(method, getter, js_name = startIndex)]
         pub fn start_index(this: &TreeCursor) -> u32;
 
-        #[wasm_bindgen(method, getter, js_name = endPosition)]
+        #[wasm_bindgen(method, getter, js_name = endIndex)]
         pub fn end_index(this: &TreeCursor) -> u32;
 
         // Instance Methods
