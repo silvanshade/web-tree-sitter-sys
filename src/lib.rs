@@ -1,3 +1,5 @@
+// FIXME: Double check we construct object properties in order.
+
 mod parser {
     use js_sys::{Array, Function, JsString, Object, Promise, Reflect};
     use wasm_bindgen::{prelude::*, JsCast};
