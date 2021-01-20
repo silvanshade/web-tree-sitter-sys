@@ -121,7 +121,13 @@ mod parser {
         pub fn field_id_for_name(this: &Language, field_name: &str) -> Option<u16>;
 
         #[wasm_bindgen(catch, method)]
-        pub fn query(this: &Language, source: &JsString) -> Result<Query, JsValue>;
+        pub fn query(this: &Language, source: &JsString) -> Result<Query, QueryError>;
+    }
+
+    #[wasm_bindgen]
+    extern {
+        #[derive(Clone, Debug, PartialEq)]
+        pub type LanguageError;
     }
 
     #[wasm_bindgen]
@@ -310,6 +316,12 @@ mod parser {
             Reflect::set(&obj, &"node".into(), &node.into()).unwrap();
             JsCast::unchecked_into(obj)
         }
+    }
+
+    #[wasm_bindgen]
+    extern {
+        #[derive(Clone, Debug, PartialEq)]
+        pub type QueryError;
     }
 
     #[wasm_bindgen]
@@ -671,7 +683,7 @@ extern {
     pub fn get_language(this: &Parser) -> Option<parser::Language>;
 
     #[wasm_bindgen(catch, method, js_name = setLanguage)]
-    pub fn set_language(this: &Parser, language: Option<&parser::Language>) -> Result<(), JsValue>;
+    pub fn set_language(this: &Parser, language: Option<&parser::Language>) -> Result<(), LanguageError>;
 
     #[wasm_bindgen(method, js_name = getLogger)]
     pub fn get_logger(this: &Parser) -> Option<parser::Logger>;
