@@ -685,6 +685,9 @@ extern {
         options: Option<&parser::ParseOptions>,
     ) -> Option<Tree>;
 
+    #[wasm_bindgen(method)]
+    pub fn reset(this: &Parser);
+
     #[wasm_bindgen(catch, method, js_name = setLanguage)]
     pub fn set_language(this: &Parser, language: Option<&parser::Language>) -> Result<(), LanguageError>;
 
