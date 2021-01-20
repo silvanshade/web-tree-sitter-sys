@@ -110,15 +110,15 @@ mod parser {
         pub fn version(this: &Language) -> u32;
 
         #[wasm_bindgen(method, getter, js_name = fieldCount)]
-        pub fn field_count(this: &Language) -> u32;
+        pub fn field_count(this: &Language) -> u16;
 
         // Instance Methods
 
         #[wasm_bindgen(method, js_name = fieldNameForId)]
-        pub fn field_name_for_id(this: &Language, field_id: u32) -> Option<String>;
+        pub fn field_name_for_id(this: &Language, field_id: u16) -> Option<String>;
 
         #[wasm_bindgen(method, js_name = fieldIdForName)]
-        pub fn field_id_for_name(this: &Language, field_name: &str) -> Option<u32>;
+        pub fn field_id_for_name(this: &Language, field_name: &str) -> Option<u16>;
 
         #[wasm_bindgen(catch, method)]
         pub fn query(this: &Language, source: &JsString) -> Result<Query, JsValue>;
@@ -476,7 +476,7 @@ mod parser {
         pub fn named_child(this: &SyntaxNode, index: u32) -> Option<SyntaxNode>;
 
         #[wasm_bindgen(method, js_name = childForFieldId)]
-        pub fn child_for_field_id(this: &SyntaxNode, field_id: u32) -> Option<SyntaxNode>;
+        pub fn child_for_field_id(this: &SyntaxNode, field_id: u16) -> Option<SyntaxNode>;
 
         #[wasm_bindgen(method, js_name = childForFieldName)]
         pub fn child_for_field_name(this: &SyntaxNode, field_name: &str) -> Option<SyntaxNode>;
@@ -610,7 +610,7 @@ mod parser {
         pub fn current_node(this: &TreeCursor) -> SyntaxNode;
 
         #[wasm_bindgen(method, js_name = currentFieldId)]
-        pub fn current_field_id(this: &TreeCursor) -> Option<u32>;
+        pub fn current_field_id(this: &TreeCursor) -> Option<u16>;
 
         #[wasm_bindgen(method, js_name = currentFieldName)]
         pub fn current_field_name(this: &TreeCursor) -> Option<JsString>;
