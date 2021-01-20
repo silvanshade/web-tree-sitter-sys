@@ -118,6 +118,8 @@ jobs:
     name: Run cargo test
     needs: [skip-commit]
     runs-on: ubuntu-latest
+    env:
+      WASM_BINDGEN_CLI_VERSION: "0.2.69"
     steps:
       - uses: actions/checkout@v2
       - name: Install Rust toolchain
@@ -136,7 +138,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: install
-          args: --root ${{ runner.tool_cache }}/wasm-bindgen-cli --force wasm-bindgen-cli
+          args: --root ${{ runner.tool_cache }}/wasm-bindgen-cli --force wasm-bindgen-cli --version ${{ env.WASM_BINDGEN_CLI_VERSION }}
       - run: echo "${{ runner.tool_cache }}/wasm-bindgen-cli/bin" >> $GITHUB_PATH
       - name: Run cargo xtask test
         uses: actions-rs/cargo@v1
