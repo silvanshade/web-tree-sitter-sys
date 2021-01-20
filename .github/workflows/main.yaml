@@ -141,6 +141,8 @@ jobs:
           args: --root ${{ runner.tool_cache }}/wasm-bindgen-cli --force wasm-bindgen-cli --version ${{ env.WASM_BINDGEN_CLI_VERSION }}
       - name: Configure $PATH for wasm-bindgen-cli
         run: echo "${{ runner.tool_cache }}/wasm-bindgen-cli/bin" >> $GITHUB_PATH
+      - name: Install node dependencies
+        run: npm ci
       - name: Run cargo xtask test
         uses: actions-rs/cargo@v1
         with:
