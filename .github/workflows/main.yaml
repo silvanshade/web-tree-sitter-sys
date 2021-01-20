@@ -125,6 +125,19 @@ jobs:
         with:
           profile: minimal
       - run: rustup target add wasm32-unknown-unknown
+      - name: Cache wasm-bindgen-cli/bin
+        id: cache-wasm-bindgen-cli
+        uses: actions/cache@v1
+        with:
+          path: ${{ runner.tool_cache }}/wasm-bindgen-cli/bin
+          key: wasm-bindgen-cli-bin-${{ hashFiles('.github/caching/wasm-bindgen-cli.lock') }}
+      - name: Install wasm-bindgen-cli
+        if: "steps.cache-wasm-bindgen-cli.outputs.cache-hit != 'true'"
+        uses: actions-rs/cargo@v1
+        with:
+          command: install
+          args: --root ${{ runner.tool_cache }}/wasm-bindgen-cli --force wasm-bindgen-cli
+      - run: echo "${{ runner.tool_cache }}/wasm-bindgen-cli/bin" >> $GITHUB_PATH
       - name: Run cargo xtask test
         uses: actions-rs/cargo@v1
         with:
