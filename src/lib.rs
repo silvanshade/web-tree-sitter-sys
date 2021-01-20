@@ -12,23 +12,23 @@ mod parser {
 
         // Instance Properties
 
-        #[wasm_bindgen(method, getter, js_name = startIndex)]
-        pub fn start_index(this: &Edit) -> u32;
+        #[wasm_bindgen(method, getter, js_name = newEndIndex)]
+        pub fn new_end_index(this: &Edit) -> u32;
+
+        #[wasm_bindgen(method, getter, js_name = newEndPosition)]
+        pub fn new_end_position(this: &Edit) -> Point;
 
         #[wasm_bindgen(method, getter, js_name = oldEndIndex)]
         pub fn old_end_index(this: &Edit) -> u32;
 
-        #[wasm_bindgen(method, getter, js_name = newEndIndex)]
-        pub fn new_end_index(this: &Edit) -> u32;
-
-        #[wasm_bindgen(method, getter, js_name = startPosition)]
-        pub fn start_position(this: &Edit) -> Point;
-
         #[wasm_bindgen(method, getter, js_name = oldEndPosition)]
         pub fn old_end_position(this: &Edit) -> Point;
 
-        #[wasm_bindgen(method, getter, js_name = newEndPosition)]
-        pub fn new_end_position(this: &Edit) -> Point;
+        #[wasm_bindgen(method, getter, js_name = startIndex)]
+        pub fn start_index(this: &Edit) -> u32;
+
+        #[wasm_bindgen(method, getter, js_name = startPosition)]
+        pub fn start_position(this: &Edit) -> Point;
     }
 
     impl Edit {
@@ -167,10 +167,10 @@ mod parser {
         // Instance Properties
 
         #[wasm_bindgen(method, getter)]
-        pub fn row(this: &Point) -> u32;
+        pub fn column(this: &Point) -> u32;
 
         #[wasm_bindgen(method, getter)]
-        pub fn column(this: &Point) -> u32;
+        pub fn row(this: &Point) -> u32;
     }
 
     impl Point {
@@ -357,8 +357,8 @@ mod parser {
 
         // Instance Properties
 
-        #[wasm_bindgen(method, getter, js_name = startPosition)]
-        pub fn start_position(this: &Range) -> Point;
+        #[wasm_bindgen(method, getter, js_name = endIndex)]
+        pub fn end_index(this: &Range) -> u32;
 
         #[wasm_bindgen(method, getter, js_name = endPosition)]
         pub fn end_position(this: &Range) -> Point;
@@ -366,8 +366,8 @@ mod parser {
         #[wasm_bindgen(method, getter, js_name = startIndex)]
         pub fn start_index(this: &Range) -> u32;
 
-        #[wasm_bindgen(method, getter, js_name = endIndex)]
-        pub fn end_index(this: &Range) -> u32;
+        #[wasm_bindgen(method, getter, js_name = startPosition)]
+        pub fn start_position(this: &Range) -> Point;
     }
 
     impl Range {
@@ -398,44 +398,17 @@ mod parser {
 
         // Instance Properties
 
-        #[wasm_bindgen(method, getter)]
-        pub fn id(this: &SyntaxNode) -> u32;
-
-        #[wasm_bindgen(method, getter)]
-        pub fn tree(this: &SyntaxNode) -> Tree;
-
-        #[wasm_bindgen(method, getter, js_name = type)]
-        pub fn type_(this: &SyntaxNode) -> JsString;
-
-        #[wasm_bindgen(method, getter)]
-        pub fn text(this: &SyntaxNode) -> JsString;
-
-        #[wasm_bindgen(method, getter, js_name = startPosition)]
-        pub fn start_position(this: &SyntaxNode) -> Point;
-
-        #[wasm_bindgen(method, getter, js_name = endPosition)]
-        pub fn end_position(this: &SyntaxNode) -> Point;
-
-        #[wasm_bindgen(method, getter, js_name = startIndex)]
-        pub fn start_index(this: &SyntaxNode) -> u32;
-
-        #[wasm_bindgen(method, getter, js_name = endIndex)]
-        pub fn end_index(this: &SyntaxNode) -> u32;
-
-        #[wasm_bindgen(method, getter)]
-        pub fn parent(this: &SyntaxNode) -> Option<SyntaxNode>;
+        #[wasm_bindgen(method, getter, js_name = childCount)]
+        pub fn child_count(this: &SyntaxNode) -> u32;
 
         #[wasm_bindgen(method, getter)]
         pub fn children(this: &SyntaxNode) -> Box<[JsValue]>;
 
-        #[wasm_bindgen(method, getter, js_name = namedChildren)]
-        pub fn named_children(this: &SyntaxNode) -> Box<[JsValue]>;
+        #[wasm_bindgen(method, getter, js_name = endIndex)]
+        pub fn end_index(this: &SyntaxNode) -> u32;
 
-        #[wasm_bindgen(method, getter, js_name = childCount)]
-        pub fn child_count(this: &SyntaxNode) -> u32;
-
-        #[wasm_bindgen(method, getter, js_name = namedChildCount)]
-        pub fn named_child_count(this: &SyntaxNode) -> u32;
+        #[wasm_bindgen(method, getter, js_name = endPosition)]
+        pub fn end_position(this: &SyntaxNode) -> Point;
 
         #[wasm_bindgen(method, getter, js_name = firstChild)]
         pub fn first_child(this: &SyntaxNode) -> Option<SyntaxNode>;
@@ -443,49 +416,55 @@ mod parser {
         #[wasm_bindgen(method, getter, js_name = firstNamedChild)]
         pub fn first_named_child(this: &SyntaxNode) -> Option<SyntaxNode>;
 
+        #[wasm_bindgen(method, getter)]
+        pub fn id(this: &SyntaxNode) -> u32;
+
         #[wasm_bindgen(method, getter, js_name = lastChild)]
         pub fn last_child(this: &SyntaxNode) -> Option<SyntaxNode>;
 
         #[wasm_bindgen(method, getter, js_name = lastNamedChild)]
         pub fn last_named_child(this: &SyntaxNode) -> Option<SyntaxNode>;
 
-        #[wasm_bindgen(method, getter, js_name = nextSibling)]
-        pub fn next_sibling(this: &SyntaxNode) -> Option<SyntaxNode>;
+        #[wasm_bindgen(method, getter, js_name = namedChildCount)]
+        pub fn named_child_count(this: &SyntaxNode) -> u32;
+
+        #[wasm_bindgen(method, getter, js_name = namedChildren)]
+        pub fn named_children(this: &SyntaxNode) -> Box<[JsValue]>;
 
         #[wasm_bindgen(method, getter, js_name = nextNamedSibling)]
         pub fn next_named_sibling(this: &SyntaxNode) -> Option<SyntaxNode>;
 
-        #[wasm_bindgen(method, getter, js_name = previousSibling)]
-        pub fn previous_sibling(this: &SyntaxNode) -> Option<SyntaxNode>;
+        #[wasm_bindgen(method, getter, js_name = nextSibling)]
+        pub fn next_sibling(this: &SyntaxNode) -> Option<SyntaxNode>;
+
+        #[wasm_bindgen(method, getter)]
+        pub fn parent(this: &SyntaxNode) -> Option<SyntaxNode>;
 
         #[wasm_bindgen(method, getter, js_name = previousNamedSibling)]
         pub fn previous_named_sibling(this: &SyntaxNode) -> Option<SyntaxNode>;
 
+        #[wasm_bindgen(method, getter, js_name = previousSibling)]
+        pub fn previous_sibling(this: &SyntaxNode) -> Option<SyntaxNode>;
+
+        #[wasm_bindgen(method, getter, js_name = startIndex)]
+        pub fn start_index(this: &SyntaxNode) -> u32;
+
+        #[wasm_bindgen(method, getter, js_name = startPosition)]
+        pub fn start_position(this: &SyntaxNode) -> Point;
+
+        #[wasm_bindgen(method, getter)]
+        pub fn text(this: &SyntaxNode) -> JsString;
+
+        #[wasm_bindgen(method, getter)]
+        pub fn tree(this: &SyntaxNode) -> Tree;
+
+        #[wasm_bindgen(method, getter, js_name = type)]
+        pub fn type_(this: &SyntaxNode) -> JsString;
+
         // Instance Methods
-
-        #[wasm_bindgen(method, js_name = hasChanges)]
-        pub fn has_changes(this: &SyntaxNode) -> bool;
-
-        #[wasm_bindgen(method, js_name = hasError)]
-        pub fn has_error(this: &SyntaxNode) -> bool;
-
-        #[wasm_bindgen(method)]
-        pub fn equals(this: &SyntaxNode, other: &SyntaxNode) -> bool;
-
-        #[wasm_bindgen(method, js_name = isMissing)]
-        pub fn is_missing(this: &SyntaxNode) -> bool;
-
-        #[wasm_bindgen(method, js_name = isNamed)]
-        pub fn is_named(this: &SyntaxNode) -> bool;
-
-        #[wasm_bindgen(method, js_name = toString)]
-        pub fn to_string(this: &SyntaxNode) -> JsString;
 
         #[wasm_bindgen(method)]
         pub fn child(this: &SyntaxNode, index: u32) -> Option<SyntaxNode>;
-
-        #[wasm_bindgen(method, js_name = namedChild)]
-        pub fn named_child(this: &SyntaxNode, index: u32) -> Option<SyntaxNode>;
 
         #[wasm_bindgen(method, js_name = childForFieldId)]
         pub fn child_for_field_id(this: &SyntaxNode, field_id: u16) -> Option<SyntaxNode>;
@@ -499,6 +478,24 @@ mod parser {
         #[wasm_bindgen(method, js_name = descendantForIndex)]
         pub fn descendant_for_index_range(this: &SyntaxNode, start_index: u32, end_index: u32) -> Option<SyntaxNode>;
 
+        #[wasm_bindgen(method, js_name = descendantForPosition)]
+        pub fn descendant_for_position(this: &SyntaxNode, position: &Point) -> Option<SyntaxNode>;
+
+        #[wasm_bindgen(method, js_name = descendantForPosition)]
+        pub fn descendant_for_position_range(
+            this: &SyntaxNode,
+            start_position: &Point,
+            end_position: &Point,
+        ) -> Option<SyntaxNode>;
+
+        #[wasm_bindgen(method, js_name = descendantsOfType)]
+        pub fn descendants_of_type_array(
+            this: &SyntaxNode,
+            type_: Box<[JsValue]>,
+            start_position: Option<&Point>,
+            end_position: Option<&Point>,
+        ) -> Box<[JsValue]>;
+
         // -> SyntaxNode[]
         #[wasm_bindgen(method, js_name = descendantsOfType)]
         pub fn descendants_of_type_string(
@@ -508,13 +505,23 @@ mod parser {
             end_position: Option<&Point>,
         ) -> Box<[JsValue]>;
 
-        #[wasm_bindgen(method, js_name = descendantsOfType)]
-        pub fn descendants_of_type_array(
-            this: &SyntaxNode,
-            type_: Box<[JsValue]>,
-            start_position: Option<&Point>,
-            end_position: Option<&Point>,
-        ) -> Box<[JsValue]>;
+        #[wasm_bindgen(method)]
+        pub fn equals(this: &SyntaxNode, other: &SyntaxNode) -> bool;
+
+        #[wasm_bindgen(method, js_name = hasChanges)]
+        pub fn has_changes(this: &SyntaxNode) -> bool;
+
+        #[wasm_bindgen(method, js_name = hasError)]
+        pub fn has_error(this: &SyntaxNode) -> bool;
+
+        #[wasm_bindgen(method, js_name = isMissing)]
+        pub fn is_missing(this: &SyntaxNode) -> bool;
+
+        #[wasm_bindgen(method, js_name = isNamed)]
+        pub fn is_named(this: &SyntaxNode) -> bool;
+
+        #[wasm_bindgen(method, js_name = namedChild)]
+        pub fn named_child(this: &SyntaxNode, index: u32) -> Option<SyntaxNode>;
 
         #[wasm_bindgen(method, js_name = namedDescendantForIndex)]
         pub fn named_descendant_for_index(this: &SyntaxNode, index: u32) -> Option<SyntaxNode>;
@@ -526,16 +533,6 @@ mod parser {
             end_index: u32,
         ) -> Option<SyntaxNode>;
 
-        #[wasm_bindgen(method, js_name = descendantForPosition)]
-        pub fn descendant_for_position(this: &SyntaxNode, position: &Point) -> Option<SyntaxNode>;
-
-        #[wasm_bindgen(method, js_name = descendantForPosition)]
-        pub fn descendant_for_position_range(
-            this: &SyntaxNode,
-            start_position: &Point,
-            end_position: &Point,
-        ) -> Option<SyntaxNode>;
-
         #[wasm_bindgen(method, js_name = namedDescendantForPosition)]
         pub fn named_descendant_for_position(this: &SyntaxNode, position: &Point) -> Option<SyntaxNode>;
 
@@ -545,6 +542,9 @@ mod parser {
             start_position: &Point,
             end_position: &Point,
         ) -> Option<SyntaxNode>;
+
+        #[wasm_bindgen(method, js_name = toString)]
+        pub fn to_string(this: &SyntaxNode) -> JsString;
 
         #[wasm_bindgen(method)]
         pub fn walk(this: &SyntaxNode) -> TreeCursor;
@@ -589,37 +589,28 @@ mod parser {
 
         // Instance Properties
 
-        #[wasm_bindgen(method, getter, js_name = nodeType)]
-        pub fn node_type(this: &TreeCursor) -> JsString;
-
-        #[wasm_bindgen(method, getter, js_name = nodeText)]
-        pub fn node_text(this: &TreeCursor) -> JsString;
-
-        #[wasm_bindgen(method, getter, js_name = nodeIsNamed)]
-        pub fn node_is_named(this: &TreeCursor) -> bool;
-
-        #[wasm_bindgen(method, getter, js_name = startPosition)]
-        pub fn start_position(this: &TreeCursor) -> Point;
+        #[wasm_bindgen(method, getter, js_name = endIndex)]
+        pub fn end_index(this: &TreeCursor) -> u32;
 
         #[wasm_bindgen(method, getter, js_name = endPosition)]
         pub fn end_position(this: &TreeCursor) -> Point;
 
+        #[wasm_bindgen(method, getter, js_name = nodeIsNamed)]
+        pub fn node_is_named(this: &TreeCursor) -> bool;
+
+        #[wasm_bindgen(method, getter, js_name = nodeText)]
+        pub fn node_text(this: &TreeCursor) -> JsString;
+
+        #[wasm_bindgen(method, getter, js_name = nodeType)]
+        pub fn node_type(this: &TreeCursor) -> JsString;
+
         #[wasm_bindgen(method, getter, js_name = startIndex)]
         pub fn start_index(this: &TreeCursor) -> u32;
 
-        #[wasm_bindgen(method, getter, js_name = endIndex)]
-        pub fn end_index(this: &TreeCursor) -> u32;
+        #[wasm_bindgen(method, getter, js_name = startPosition)]
+        pub fn start_position(this: &TreeCursor) -> Point;
 
         // Instance Methods
-
-        #[wasm_bindgen(method)]
-        pub fn reset(this: &TreeCursor, node: &SyntaxNode);
-
-        #[wasm_bindgen(method)]
-        pub fn delete(this: &TreeCursor);
-
-        #[wasm_bindgen(method, js_name = currentNode)]
-        pub fn current_node(this: &TreeCursor) -> SyntaxNode;
 
         #[wasm_bindgen(method, js_name = currentFieldId)]
         pub fn current_field_id(this: &TreeCursor) -> Option<u16>;
@@ -627,14 +618,23 @@ mod parser {
         #[wasm_bindgen(method, js_name = currentFieldName)]
         pub fn current_field_name(this: &TreeCursor) -> Option<JsString>;
 
-        #[wasm_bindgen(method, js_name = gotoParent)]
-        pub fn goto_parent(this: &TreeCursor) -> bool;
+        #[wasm_bindgen(method, js_name = currentNode)]
+        pub fn current_node(this: &TreeCursor) -> SyntaxNode;
+
+        #[wasm_bindgen(method)]
+        pub fn delete(this: &TreeCursor);
 
         #[wasm_bindgen(method, js_name = gotoFirstChild)]
         pub fn goto_first_child(this: &TreeCursor) -> bool;
 
         #[wasm_bindgen(method, js_name = gotoNextSibling)]
         pub fn goto_next_sibling(this: &TreeCursor) -> bool;
+
+        #[wasm_bindgen(method, js_name = gotoParent)]
+        pub fn goto_parent(this: &TreeCursor) -> bool;
+
+        #[wasm_bindgen(method)]
+        pub fn reset(this: &TreeCursor, node: &SyntaxNode);
     }
 }
 
@@ -663,6 +663,12 @@ extern {
     #[wasm_bindgen(method)]
     pub fn delete(this: &Parser);
 
+    #[wasm_bindgen(method, js_name = getLanguage)]
+    pub fn get_language(this: &Parser) -> Option<parser::Language>;
+
+    #[wasm_bindgen(method, js_name = getLogger)]
+    pub fn get_logger(this: &Parser) -> Option<parser::Logger>;
+
     #[wasm_bindgen(method, js_name = parse)]
     pub fn parse_with_function(
         this: &Parser,
@@ -679,14 +685,8 @@ extern {
         options: Option<&parser::ParseOptions>,
     ) -> Option<Tree>;
 
-    #[wasm_bindgen(method, js_name = getLanguage)]
-    pub fn get_language(this: &Parser) -> Option<parser::Language>;
-
     #[wasm_bindgen(catch, method, js_name = setLanguage)]
     pub fn set_language(this: &Parser, language: Option<&parser::Language>) -> Result<(), LanguageError>;
-
-    #[wasm_bindgen(method, js_name = getLogger)]
-    pub fn get_logger(this: &Parser) -> Option<parser::Logger>;
 
     #[wasm_bindgen(method, js_name = setLogger)]
     pub fn set_logger(this: &Parser, logger: Option<&parser::Logger>);
