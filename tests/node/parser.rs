@@ -72,6 +72,16 @@ async fn parse_with_string() {
 }
 
 #[wasm_bindgen_test]
+async fn reset() {
+    async fn inner() -> Result<(), JsValue> {
+        let parser = Parser::new();
+        parser.reset();
+        Ok(())
+    }
+    assert!(inner().await.is_ok())
+}
+
+#[wasm_bindgen_test]
 async fn set_get_language() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
