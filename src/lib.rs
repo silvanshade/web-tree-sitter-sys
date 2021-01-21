@@ -669,6 +669,9 @@ extern {
     #[wasm_bindgen(method, js_name = getLogger)]
     pub fn get_logger(this: &Parser) -> Option<parser::Logger>;
 
+    #[wasm_bindgen(method, js_name = getTimeoutMicros)]
+    pub fn get_timeout_micros(this: &Parser) -> f64;
+
     #[wasm_bindgen(method, js_name = parse)]
     pub fn parse_with_function(
         this: &Parser,
@@ -693,4 +696,7 @@ extern {
 
     #[wasm_bindgen(method, js_name = setLogger)]
     pub fn set_logger(this: &Parser, logger: Option<&parser::Logger>);
+
+    #[wasm_bindgen(method, js_name = setTimeoutMicros)]
+    pub fn set_timeout_micros(this: &Parser, timeout_micros: f64);
 }
