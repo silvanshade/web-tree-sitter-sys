@@ -119,3 +119,15 @@ async fn set_get_logger() {
     }
     assert!(inner().await.is_ok());
 }
+
+#[wasm_bindgen_test]
+async fn set_get_timeout_micros() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let parser = Parser::new();
+        parser.set_timeout_micros(1000f64);
+        assert_eq!(1000f64, parser.get_timeout_micros());
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
