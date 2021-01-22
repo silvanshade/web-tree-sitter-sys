@@ -6,7 +6,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type Edit;
 
@@ -80,7 +80,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type LoggerParams;
 
@@ -132,7 +132,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type ParseOptions;
 
@@ -160,7 +160,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type Point;
 
@@ -192,7 +192,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type PredicateOperand;
 
@@ -224,7 +224,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type PredicateResult;
 
@@ -296,7 +296,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type QueryCapture;
 
@@ -326,7 +326,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type QueryMatch;
 
@@ -351,7 +351,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Clone, Debug, PartialEq)]
         #[wasm_bindgen(extends = Object)]
         pub type Range;
 
