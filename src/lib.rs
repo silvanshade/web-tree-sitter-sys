@@ -550,6 +550,14 @@ mod parser {
         pub fn walk(this: &SyntaxNode) -> TreeCursor;
     }
 
+    impl PartialEq<SyntaxNode> for SyntaxNode {
+        fn eq(&self, other: &SyntaxNode) -> bool {
+            self.equals(other)
+        }
+    }
+
+    impl Eq for SyntaxNode {}
+
     #[wasm_bindgen(module = "web-tree-sitter")]
     extern {
         #[derive(Debug)]
