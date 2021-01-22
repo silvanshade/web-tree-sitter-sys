@@ -552,7 +552,7 @@ mod parser {
 
     #[wasm_bindgen(module = "web-tree-sitter")]
     extern {
-        #[derive(Clone, Debug)]
+        #[derive(Debug)]
         pub type Tree;
 
         // Instance Properties
@@ -580,6 +580,12 @@ mod parser {
 
         #[wasm_bindgen(method, js_name = getLanguage)]
         pub fn get_language(this: &Tree) -> Language;
+    }
+
+    impl Clone for Tree {
+        fn clone(&self) -> Tree {
+            self.copy()
+        }
     }
 
     #[wasm_bindgen(module = "web-tree-sitter")]
