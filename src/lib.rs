@@ -558,6 +558,12 @@ mod parser {
 
     impl Eq for SyntaxNode {}
 
+    impl std::hash::Hash for SyntaxNode {
+        fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+            self.id().hash(state);
+        }
+    }
+
     #[wasm_bindgen(module = "web-tree-sitter")]
     extern {
         #[derive(Debug)]
