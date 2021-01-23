@@ -127,6 +127,7 @@ mod parser {
     #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug, Eq, PartialEq)]
+        #[wasm_bindgen(extends = Error)]
         pub type LanguageError;
     }
 
@@ -321,6 +322,7 @@ mod parser {
     #[wasm_bindgen]
     extern {
         #[derive(Clone, Debug, Eq, PartialEq)]
+        #[wasm_bindgen(extends = Error)]
         pub type QueryError;
     }
 
