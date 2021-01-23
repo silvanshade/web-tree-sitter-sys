@@ -126,7 +126,7 @@ async fn set_get_timeout_micros() {
         crate::util::parser::init().await?;
         let parser = Parser::new()?;
         parser.set_timeout_micros(1000f64);
-        assert_eq!(1000f64, parser.get_timeout_micros());
+        assert!((1000f64 - parser.get_timeout_micros()).abs() < std::f64::EPSILON);
         Ok(())
     }
     assert!(inner().await.is_ok());
