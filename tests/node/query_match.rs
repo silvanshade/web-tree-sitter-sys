@@ -10,7 +10,7 @@ async fn name() {
             let input = "function one() { two(); function three() {} }".into();
             let previous_tree = Default::default();
             let options = Default::default();
-            parser.parse_with_string(&input, previous_tree, options)
+            parser.parse_with_string(&input, previous_tree, options)?
         }
         .unwrap();
         let matches = {
@@ -34,7 +34,7 @@ async fn node() {
             let input = "function one() { two(); function three() {} }".into();
             let previous_tree = Default::default();
             let options = Default::default();
-            parser.parse_with_string(&input, previous_tree, options)
+            parser.parse_with_string(&input, previous_tree, options)?
         }
         .unwrap();
         let matches = {

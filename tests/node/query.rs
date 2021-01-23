@@ -33,7 +33,7 @@ async fn matches() {
             let input = "function one() { two(); function three() {} }".into();
             let previous_tree = Default::default();
             let options = Default::default();
-            parser.parse_with_string(&input, previous_tree, options)
+            parser.parse_with_string(&input, previous_tree, options)?
         }
         .unwrap();
         let _matches = {
@@ -55,7 +55,7 @@ async fn captures() {
             let input = "function one() { two(); function three() {} }".into();
             let previous_tree = Default::default();
             let options = Default::default();
-            parser.parse_with_string(&input, previous_tree, options)
+            parser.parse_with_string(&input, previous_tree, options)?
         }
         .unwrap();
         let _captures = {
@@ -73,7 +73,7 @@ async fn captures() {
 async fn predicates_for_pattern() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"

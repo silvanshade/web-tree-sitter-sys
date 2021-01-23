@@ -1,7 +1,7 @@
 // FIXME: Double check we construct object properties in order.
 
 mod parser {
-    use js_sys::{Array, Function, JsString, Object, Promise, Reflect};
+    use js_sys::{Array, Error, Function, JsString, Object, Promise, Reflect};
     use wasm_bindgen::{prelude::*, JsCast};
 
     #[wasm_bindgen]
@@ -658,7 +658,7 @@ mod parser {
     }
 }
 
-use js_sys::{JsString, Promise};
+use js_sys::{Error, JsString, Promise};
 pub use parser::*;
 use wasm_bindgen::prelude::*;
 
@@ -675,8 +675,8 @@ extern {
 
     // Constructor
 
-    #[wasm_bindgen(constructor)]
-    pub fn new() -> Parser;
+    #[wasm_bindgen(catch, constructor)]
+    pub fn new() -> Result<Parser, ParserError>;
 
     // Instance Methods
 
@@ -692,21 +692,21 @@ extern {
     #[wasm_bindgen(method, js_name = getTimeoutMicros)]
     pub fn get_timeout_micros(this: &Parser) -> f64;
 
-    #[wasm_bindgen(method, js_name = parse)]
+    #[wasm_bindgen(catch, method, js_name = parse)]
     pub fn parse_with_function(
         this: &Parser,
         input: &parser::Input,
         previous_tree: Option<&parser::Tree>,
         options: Option<&parser::ParseOptions>,
-    ) -> Option<Tree>;
+    ) -> Result<Option<Tree>, ParserError>;
 
-    #[wasm_bindgen(method, js_name = parse)]
+    #[wasm_bindgen(catch, method, js_name = parse)]
     pub fn parse_with_string(
         this: &Parser,
         input: &JsString,
         previous_tree: Option<&parser::Tree>,
         options: Option<&parser::ParseOptions>,
-    ) -> Option<Tree>;
+    ) -> Result<Option<Tree>, ParserError>;
 
     #[wasm_bindgen(method)]
     pub fn reset(this: &Parser);
@@ -719,4 +719,11 @@ extern {
 
     #[wasm_bindgen(method, js_name = setTimeoutMicros)]
     pub fn set_timeout_micros(this: &Parser, timeout_micros: f64);
+}
+
+#[wasm_bindgen]
+extern {
+    #[derive(Clone, Debug, Eq, PartialEq)]
+    #[wasm_bindgen(extends = Error)]
+    pub type ParserError;
 }
