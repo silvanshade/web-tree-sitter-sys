@@ -26,7 +26,7 @@ async fn new() {
 async fn delete() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         parser.delete();
         Ok(())
     }
@@ -37,7 +37,7 @@ async fn delete() {
 async fn parse_with_function() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let clo = Closure::wrap(Box::new(move |_, _, _| None) as Box<InputClosureType>);
@@ -57,7 +57,7 @@ async fn parse_with_function() {
 async fn parse_with_string() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let _tree = {
@@ -74,7 +74,7 @@ async fn parse_with_string() {
 #[wasm_bindgen_test]
 async fn reset() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         parser.reset();
         Ok(())
     }
@@ -85,7 +85,7 @@ async fn reset() {
 async fn set_get_language() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
 
         parser.set_language(Some(&language))?;
@@ -103,7 +103,7 @@ async fn set_get_language() {
 async fn set_get_logger() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
 
@@ -124,7 +124,7 @@ async fn set_get_logger() {
 async fn set_get_timeout_micros() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         parser.set_timeout_micros(1000f64);
         assert_eq!(1000f64, parser.get_timeout_micros());
         Ok(())
