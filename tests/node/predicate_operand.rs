@@ -6,7 +6,7 @@ use web_tree_sitter_sys::*;
 async fn name() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"
@@ -37,7 +37,7 @@ async fn name() {
 async fn type_() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"

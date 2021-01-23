@@ -51,7 +51,7 @@ pub(crate) mod language {
 
     pub(crate) async fn query() -> Result<(Parser, Language, Query), JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"
@@ -87,14 +87,14 @@ pub(crate) mod tree {
 
     pub(crate) async fn make() -> Result<Option<Tree>, JsValue> {
         crate::util::parser::init().await?;
-        let parser = Parser::new();
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let tree = {
             let input = <String as Default>::default().into();
             let previous_tree = Default::default();
             let options = Default::default();
-            parser.parse_with_string(&input, previous_tree, options)
+            parser.parse_with_string(&input, previous_tree, options)?
         };
         Ok(tree)
     }
