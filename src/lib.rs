@@ -126,7 +126,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug, PartialEq)]
+        #[derive(Clone, Debug, Eq, PartialEq)]
         pub type LanguageError;
     }
 
@@ -320,7 +320,7 @@ mod parser {
 
     #[wasm_bindgen]
     extern {
-        #[derive(Clone, Debug, PartialEq)]
+        #[derive(Clone, Debug, Eq, PartialEq)]
         pub type QueryError;
     }
 
@@ -556,7 +556,8 @@ mod parser {
         }
     }
 
-    impl Eq for SyntaxNode {}
+    impl Eq for SyntaxNode {
+    }
 
     impl std::hash::Hash for SyntaxNode {
         fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
