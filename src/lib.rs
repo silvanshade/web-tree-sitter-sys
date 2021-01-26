@@ -1,7 +1,7 @@
 // FIXME: Double check we construct object properties in order.
 
 mod parser {
-    use js_sys::{Array, Error, Function, JsString, Object, Promise, Reflect};
+    use js_sys::{Array, Error, Function, JsString, Object, Promise, Reflect, Uint8Array};
     use wasm_bindgen::{prelude::*, JsCast};
 
     #[wasm_bindgen]
@@ -101,8 +101,11 @@ mod parser {
 
         // Static Methods
 
-        #[wasm_bindgen(static_method_of = Language)]
-        pub fn load(path: &str) -> Promise;
+        #[wasm_bindgen(static_method_of = Language, js_name = load)]
+        pub fn load_bytes(bytes: &Uint8Array) -> Promise;
+
+        #[wasm_bindgen(static_method_of = Language, js_name = load)]
+        pub fn load_path(path: &str) -> Promise;
 
         // Instance Properties
 
