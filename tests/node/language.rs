@@ -2,7 +2,21 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen_test::*;
 
 #[wasm_bindgen_test]
-async fn load() {
+async fn load_bytes() {
+    async fn inner() -> Result<(), JsValue> {
+        use wasm_bindgen::JsCast;
+        use wasm_bindgen_futures::JsFuture;
+        use web_tree_sitter_sys::Language;
+        let bytes: &[u8] = include_bytes!("../../assets/tree-sitter-javascript.wasm");
+        let language = JsFuture::from(Language::load_bytes(&bytes.into())).await?;
+        language.unchecked_into::<Language>();
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn load_path() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         crate::util::language::load().await?;
