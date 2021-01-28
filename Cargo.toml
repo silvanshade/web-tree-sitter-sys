@@ -18,12 +18,6 @@ crate-type = ["cdylib", "rlib"]
 doctest = false
 test = false
 
-[profile.release]
-codegen-units = 1
-lto = "fat"
-opt-level = 'z'
-panic = 'abort'
-
 [features]
 default = ["wee_alloc"]
 
