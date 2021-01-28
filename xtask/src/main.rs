@@ -21,7 +21,6 @@ SUBCOMMANDS:
     format
     help                Prints this message or the help of the subcommand(s)
     init
-    install
     test
 "#
     .trim();
@@ -53,7 +52,6 @@ SUBCOMMANDS:
         Some("doc") => subcommand::cargo::doc(&mut args, &cargo_args),
         Some("format") => subcommand::cargo::format(&mut args, &cargo_args),
         Some("init") => subcommand::cargo::init(&mut args),
-        Some("install") => subcommand::cargo::install(&mut args, &cargo_args),
         Some("test") => subcommand::cargo::test(&mut args, &cargo_args),
         Some("udeps") => subcommand::cargo::udeps(&mut args, &cargo_args),
         Some("help") => {
@@ -116,7 +114,9 @@ FLAGS:
             let cargo = metadata::cargo()?;
             let mut cmd = Command::new(cargo);
             cmd.current_dir(metadata::project_root());
-            cmd.args(&["build", "--package", "web-tree-sitter-sys"]);
+            cmd.args(&["build"]);
+            cmd.args(&["--package", "web-tree-sitter-sys"]);
+            cmd.args(&["--target", "wasm32-unknown-unknown"]);
             cmd.args(cargo_args);
             cmd.status()?;
 
@@ -283,37 +283,6 @@ FLAGS:
                 cmd.args(&["tree-sitter", "build-wasm", "../node_modules/tree-sitter-javascript"]);
                 cmd.status()?;
             }
-
-            Ok(())
-        }
-
-        // Run `cargo install` with custom options.
-        pub fn install(args: &mut pico_args::Arguments, cargo_args: &[std::ffi::OsString]) -> crate::Fallible<()> {
-            let help = r#"
-xtask-install
-
-USAGE:
-    xtask install
-
-FLAGS:
-    -h, --help          Prints help information
-    -- '...'            Extra arguments to pass to the cargo command
-"#
-            .trim();
-
-            if args.contains(["-h", "--help"]) {
-                println!("{}\n", help);
-                return Ok(());
-            }
-
-            crate::util::handle_unused(args)?;
-
-            let cargo = metadata::cargo()?;
-            let mut cmd = Command::new(cargo);
-            cmd.current_dir(metadata::project_root());
-            cmd.args(&["install", "--path", "crates/cli"]);
-            cmd.args(cargo_args);
-            cmd.status()?;
 
             Ok(())
         }
