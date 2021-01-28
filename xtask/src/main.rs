@@ -1,7 +1,4 @@
-//! Cargo xtask definitions for the project.
-
 #![deny(clippy::all)]
-#![deny(missing_docs)]
 #![deny(unsafe_code)]
 
 type Fallible<T> = Result<T, Box<dyn std::error::Error>>;
@@ -96,7 +93,6 @@ mod subcommand {
         use crate::metadata;
         use std::process::Command;
 
-        // Run `cargo build` with custom options.
         pub fn build(args: &mut pico_args::Arguments, cargo_args: &[std::ffi::OsString]) -> crate::Fallible<()> {
             let help = r#"
 xtask-build
@@ -127,7 +123,6 @@ FLAGS:
             Ok(())
         }
 
-        // Run `cargo check` with custom options.
         pub fn check(args: &mut pico_args::Arguments, cargo_args: &[std::ffi::OsString]) -> crate::Fallible<()> {
             let help = r#"
 xtask-check
@@ -161,7 +156,6 @@ FLAGS:
             Ok(())
         }
 
-        // Run `cargo clippy` with custom options.
         pub fn clippy(args: &mut pico_args::Arguments, cargo_args: &[std::ffi::OsString]) -> crate::Fallible<()> {
             let help = r#"
 xtask-clippy
@@ -195,7 +189,6 @@ FLAGS:
             Ok(())
         }
 
-        // Run `cargo doc` with custom options.
         pub fn doc(args: &mut pico_args::Arguments, cargo_args: &[std::ffi::OsString]) -> crate::Fallible<()> {
             let help = r#"
 xtask-doc
@@ -226,7 +219,6 @@ FLAGS:
             Ok(())
         }
 
-        // Run `cargo format` with custom options.
         pub fn format(args: &mut pico_args::Arguments, cargo_args: &[std::ffi::OsString]) -> crate::Fallible<()> {
             let help = r#"
 xtask-format
@@ -257,7 +249,6 @@ FLAGS:
             Ok(())
         }
 
-        // Run `cargo init` with custom options.
         pub fn init(args: &mut pico_args::Arguments) -> crate::Fallible<()> {
             let help = r#"
 xtask-init
@@ -361,7 +352,6 @@ FLAGS:
             Ok(())
         }
 
-        // Run `cargo udeps` with custom options.
         pub fn udeps(args: &mut pico_args::Arguments, cargo_args: &[std::ffi::OsString]) -> crate::Fallible<()> {
             let help = r#"
 xtask-udep
