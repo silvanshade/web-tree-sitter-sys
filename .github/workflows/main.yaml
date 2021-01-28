@@ -141,7 +141,7 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ runner.tool_cache }}/wasm-bindgen-cli/bin
-          key: wasm-bindgen-cli-bin-${{ hashFiles('.github/caching/wasm-bindgen-cli.lock') }}
+          key: wasm-bindgen-cli-bin-${{ env.WASM_BINDGEN_CLI_VERSION }}
       - name: Install wasm-bindgen-cli
         if: "steps.cache-wasm-bindgen-cli.outputs.cache-hit != 'true'"
         uses: actions-rs/cargo@v1
