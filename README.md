@@ -4,7 +4,7 @@
     <strong>Raw bindings to the web-tree-sitter-sys API for projects using wasm-bindgen.</strong>
   </p>
   <p style="margin-bottom: 0.5ex;">
-    <a href="https://hvithrafn.github.io/web-tree-sitter-sys/wasm_language_server"><img
+    <a href="https://hvithrafn.github.io/web-tree-sitter-sys/web_tree_sitter_sys"><img
         src="https://img.shields.io/badge/docs-latest-blueviolet?logo=Read-the-docs&logoColor=white"
         /></a>
     <a href="https://github.com/hvithrafn/web-tree-sitter-sys/actions"><img
