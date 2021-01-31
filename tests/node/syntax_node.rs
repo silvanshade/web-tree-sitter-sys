@@ -32,6 +32,16 @@ async fn type_() {
 }
 
 #[wasm_bindgen_test]
+async fn type_id() {
+    async fn inner() -> Result<(), JsValue> {
+        let node = crate::util::syntax_node::make().await?.unwrap();
+        let _ = node.type_id();
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
 async fn text() {
     async fn inner() -> Result<(), JsValue> {
         let node = crate::util::syntax_node::make().await?.unwrap();
