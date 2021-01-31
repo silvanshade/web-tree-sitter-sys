@@ -465,6 +465,9 @@ extern {
     #[wasm_bindgen(method, getter, js_name = type)]
     pub fn type_(this: &SyntaxNode) -> JsString;
 
+    #[wasm_bindgen(method, getter, js_name = typeId)]
+    pub fn type_id(this: &SyntaxNode) -> u16;
+
     // Instance Methods
 
     #[wasm_bindgen(method)]
