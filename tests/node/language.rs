@@ -48,12 +48,22 @@ async fn field_count() {
 }
 
 #[wasm_bindgen_test]
+async fn node_kind_count() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        assert_eq!(232, language.node_kind_count());
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
 async fn field_name_for_id() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        let name = language.field_id_for_name("alias");
-        assert_eq!(Some(1), name);
+        assert_eq!(Some(12), language.field_id_for_name("decorator"));
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -64,8 +74,61 @@ async fn field_id_for_name() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        let id = language.field_name_for_id(1);
-        assert_eq!(Some("alias".into()), id);
+        assert_eq!(Some("decorator".into()), language.field_name_for_id(12));
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn id_for_node_kind() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let kind = "export_statement";
+        let named = true;
+        assert_eq!(120, language.id_for_node_kind(kind, named));
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn node_kind_for_id() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let kind_id = 120;
+        assert_eq!(Some("export_statement".into()), language.node_kind_for_id(kind_id));
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn node_kind_is_named() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let kind_id = 4;
+        assert_eq!(Some("*".into()), language.node_kind_for_id(kind_id));
+        assert_eq!(false, language.node_kind_is_named(kind_id));
+        Ok(())
+    }
+    assert!(inner().await.is_ok());
+}
+
+#[wasm_bindgen_test]
+async fn node_kind_is_visible() {
+    async fn inner() -> Result<(), JsValue> {
+        crate::util::parser::init().await?;
+        let language = crate::util::language::load().await?;
+        let kind_id = 95;
+        assert_eq!(false, language.node_kind_is_visible(kind_id));
+        let kind_id = 96;
+        assert_eq!(true, language.node_kind_is_visible(kind_id));
+        let kind_id = 97;
+        assert_eq!(false, language.node_kind_is_visible(kind_id));
         Ok(())
     }
     assert!(inner().await.is_ok());
