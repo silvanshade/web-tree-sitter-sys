@@ -114,6 +114,9 @@ extern {
     #[wasm_bindgen(method, getter, js_name = fieldCount)]
     pub fn field_count(this: &Language) -> u16;
 
+    #[wasm_bindgen(method, getter, js_name = nodeTypeCount)]
+    pub fn node_kind_count(this: &Language) -> u16;
+
     // Instance Methods
 
     #[wasm_bindgen(method, js_name = fieldNameForId)]
@@ -121,6 +124,18 @@ extern {
 
     #[wasm_bindgen(method, js_name = fieldIdForName)]
     pub fn field_id_for_name(this: &Language, field_name: &str) -> Option<u16>;
+
+    #[wasm_bindgen(method, js_name = idForNodeType)]
+    pub fn id_for_node_kind(this: &Language, kind: &str, named: bool) -> u16;
+
+    #[wasm_bindgen(method, js_name = nodeTypeForId)]
+    pub fn node_kind_for_id(this: &Language, kind_id: u16) -> Option<String>;
+
+    #[wasm_bindgen(method, js_name = nodeTypeIsNamed)]
+    pub fn node_kind_is_named(this: &Language, kind_id: u16) -> bool;
+
+    #[wasm_bindgen(method, js_name = nodeTypeIsVisible)]
+    pub fn node_kind_is_visible(this: &Language, kind_id: u16) -> bool;
 
     #[wasm_bindgen(catch, method)]
     pub fn query(this: &Language, source: &JsString) -> Result<Query, QueryError>;
