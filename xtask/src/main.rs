@@ -116,7 +116,6 @@ FLAGS:
             cmd.current_dir(metadata::project_root());
             cmd.args(&["build"]);
             cmd.args(&["--package", "web-tree-sitter-sys"]);
-            cmd.args(&["--target", "wasm32-unknown-unknown"]);
             cmd.args(cargo_args);
             cmd.status()?;
 
