@@ -13,8 +13,6 @@ Raw bindings to the tree-sitter-web API.
 [badges]
 maintenance = { status = "experimental" }
 
-[features]
-
 [dependencies]
 js-sys = "0.3"
 wasm-bindgen = { version = "=0.2.70", features = ["strict-macro"] }
