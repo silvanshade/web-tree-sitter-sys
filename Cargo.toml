@@ -13,11 +13,6 @@ Raw bindings to the tree-sitter-web API.
 [badges]
 maintenance = { status = "experimental" }
 
-[lib]
-crate-type = ["cdylib", "rlib"]
-doctest = false
-test = false
-
 [features]
 
 [dependencies]
