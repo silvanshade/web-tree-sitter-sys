@@ -1,7 +1,7 @@
 <div align="center">
   <h1><code>web-tree-sitter-sys</code></h1>
   <p>
-    <strong>Raw bindings to the web-tree-sitter-sys API for projects using wasm-bindgen.</strong>
+    <strong>Raw bindings to the web-tree-sitter-sys API for projects using wasm-bindgen</strong>
   </p>
   <p style="margin-bottom: 0.5ex;">
     <a href="https://hvithrafn.github.io/web-tree-sitter-sys/web_tree_sitter_sys"><img
