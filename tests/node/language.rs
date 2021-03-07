@@ -30,7 +30,7 @@ async fn version() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        assert_eq!(11, language.version());
+        assert_eq!(13, language.version());
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -52,7 +52,7 @@ async fn node_kind_count() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        assert_eq!(232, language.node_kind_count());
+        assert_eq!(246, language.node_kind_count());
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -87,7 +87,7 @@ async fn id_for_node_kind() {
         let language = crate::util::language::load().await?;
         let kind = "export_statement";
         let named = true;
-        assert_eq!(120, language.id_for_node_kind(kind, named));
+        assert_eq!(125, language.id_for_node_kind(kind, named));
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -98,7 +98,7 @@ async fn node_kind_for_id() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        let kind_id = 120;
+        let kind_id = 125;
         assert_eq!(Some("export_statement".into()), language.node_kind_for_id(kind_id));
         Ok(())
     }
@@ -123,11 +123,11 @@ async fn node_kind_is_visible() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        let kind_id = 95;
+        let kind_id = 100;
         assert_eq!(false, language.node_kind_is_visible(kind_id));
-        let kind_id = 96;
+        let kind_id = 101;
         assert_eq!(true, language.node_kind_is_visible(kind_id));
-        let kind_id = 97;
+        let kind_id = 102;
         assert_eq!(false, language.node_kind_is_visible(kind_id));
         Ok(())
     }
