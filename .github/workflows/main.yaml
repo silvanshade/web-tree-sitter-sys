@@ -122,15 +122,6 @@ jobs:
       WASM_BINDGEN_CLI_VERSION: "0.2.72"
     steps:
       - uses: actions/checkout@v2
-        with:
-          submodules: true
-      # - uses: mymindstorm/setup-emsdk@v7
-      #   with:
-      #     version: 2.0.12
-      #     actions-cache-folder: 'emsdk-cache'
-      # - name: Build web-tree-sitter package
-      #   run: ./script/build-wasm
-      #   working-directory: ./vendor/tree-sitter
       - name: Install Rust toolchain
         uses: actions-rs/toolchain@v1
         with:
