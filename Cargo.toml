@@ -20,7 +20,7 @@ opt-level = "z"
 
 [dependencies]
 js-sys = "0.3"
-wasm-bindgen = { version = "=0.2.73", features = ["strict-macro"] }
+wasm-bindgen = { version = "=0.2.74", features = ["strict-macro"] }
 
 [dependencies.web-sys]
 version = "0.3"
