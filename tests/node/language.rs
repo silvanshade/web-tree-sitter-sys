@@ -107,6 +107,7 @@ async fn node_kind_for_id() {
 
 #[wasm_bindgen_test]
 async fn node_kind_is_named() {
+    #[allow(clippy::bool_assert_comparison)]
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
@@ -120,6 +121,7 @@ async fn node_kind_is_named() {
 
 #[wasm_bindgen_test]
 async fn node_kind_is_visible() {
+    #[allow(clippy::bool_assert_comparison)]
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
