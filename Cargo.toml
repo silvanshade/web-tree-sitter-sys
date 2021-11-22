@@ -1,5 +1,5 @@
 [package]
-edition = "2018"
+edition = "2021"
 name = "web-tree-sitter-sys"
 version = "0.4.0"
 authors = ["<silvanshade@users.noreply.github.com>"]
