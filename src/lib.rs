@@ -1,3 +1,5 @@
+#![allow(clippy::unused_unit)]
+
 // FIXME: Double check we construct object properties in order.
 
 use js_sys::{Array, Error, Function, JsString, Object, Promise, Reflect, Uint8Array};
