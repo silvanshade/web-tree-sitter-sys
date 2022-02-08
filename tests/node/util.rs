@@ -1,3 +1,4 @@
+#![allow(clippy::unused_unit)]
 #![allow(non_upper_case_globals)]
 
 use js_sys::Object;
