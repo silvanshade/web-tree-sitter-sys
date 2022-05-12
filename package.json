@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "web-tree-sitter": "^0.19.0"
+    "web-tree-sitter": "https://gitpkg.now.sh/silvanshade/tree-sitter/lib/binding_web?fix-for-web-tree-sitter-sys-release"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.20.0",
