@@ -15,7 +15,7 @@ async fn copy() {
 async fn delete() {
     async fn inner() -> Result<(), JsValue> {
         let tree = crate::util::tree::make().await?.unwrap();
-        let _tree = tree.delete();
+        tree.delete();
         Ok(())
     }
     assert!(inner().await.is_ok());
