@@ -1,7 +1,7 @@
 [package]
 edition = "2021"
 name = "web-tree-sitter-sys"
-version = "0.5.0"
+version = "0.6.0"
 authors = ["<silvanshade@users.noreply.github.com>"]
 license = "Apache-2.0 WITH LLVM-exception"
 readme = "README.md"
