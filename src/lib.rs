@@ -180,7 +180,7 @@ impl Default for ParseOptions {
 
 #[wasm_bindgen]
 extern {
-    #[derive(Clone, Debug, Eq, PartialEq)]
+    #[derive(Clone, Debug)]
     #[wasm_bindgen(extends = Object)]
     pub type Point;
 
@@ -200,6 +200,11 @@ impl Point {
         Reflect::set(&obj, &"column".into(), &column.into()).unwrap();
         JsCast::unchecked_into(obj)
     }
+
+    #[inline(always)]
+    fn spread(&self) -> (u32, u32) {
+        (self.row(), self.column())
+    }
 }
 
 impl Default for Point {
@@ -207,6 +212,40 @@ impl Default for Point {
         let row = Default::default();
         let column = Default::default();
         Self::new(row, column)
+    }
+}
+
+impl Eq for Point {
+}
+
+impl std::hash::Hash for Point {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        let this = self.spread();
+        this.hash(state);
+    }
+}
+
+impl Ord for Point {
+    fn cmp(&self, that: &Self) -> std::cmp::Ordering {
+        let this = self.spread();
+        let that = that.spread();
+        this.cmp(&that)
+    }
+}
+
+impl PartialEq for Point {
+    fn eq(&self, that: &Self) -> bool {
+        let this = self.spread();
+        let that = that.spread();
+        this.eq(&that)
+    }
+}
+
+impl PartialOrd for Point {
+    fn partial_cmp(&self, that: &Point) -> Option<std::cmp::Ordering> {
+        let this = self.spread();
+        let that = that.spread();
+        this.partial_cmp(&that)
     }
 }
 
@@ -372,7 +411,7 @@ impl QueryMatch {
 
 #[wasm_bindgen]
 extern {
-    #[derive(Clone, Debug, Eq, PartialEq)]
+    #[derive(Clone, Debug)]
     #[wasm_bindgen(extends = Object)]
     pub type Range;
 
@@ -400,6 +439,16 @@ impl Range {
         Reflect::set(&obj, &"endIndex".into(), &end_index.into()).unwrap();
         JsCast::unchecked_into(obj)
     }
+
+    #[inline(always)]
+    fn spread(&self) -> (u32, u32, Point, Point) {
+        (
+            self.start_index(),
+            self.end_index(),
+            self.start_position(),
+            self.end_position(),
+        )
+    }
 }
 
 impl Default for Range {
@@ -409,6 +458,40 @@ impl Default for Range {
         let start_index = Default::default();
         let end_index = Default::default();
         Self::new(&start_position, &end_position, start_index, end_index)
+    }
+}
+
+impl Eq for Range {
+}
+
+impl std::hash::Hash for Range {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        let this = self.spread();
+        this.hash(state)
+    }
+}
+
+impl Ord for Range {
+    fn cmp(&self, that: &Self) -> std::cmp::Ordering {
+        let this = self.spread();
+        let that = that.spread();
+        this.cmp(&that)
+    }
+}
+
+impl PartialEq<Range> for Range {
+    fn eq(&self, that: &Self) -> bool {
+        let this = self.spread();
+        let that = that.spread();
+        this.eq(&that)
+    }
+}
+
+impl PartialOrd<Range> for Range {
+    fn partial_cmp(&self, that: &Self) -> Option<std::cmp::Ordering> {
+        let this = self.spread();
+        let that = that.spread();
+        this.partial_cmp(&that)
     }
 }
 
