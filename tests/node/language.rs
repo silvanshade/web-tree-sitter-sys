@@ -7,7 +7,7 @@ async fn load_bytes() {
         use wasm_bindgen::JsCast;
         use wasm_bindgen_futures::JsFuture;
         use web_tree_sitter_sys::Language;
-        let bytes: &[u8] = include_bytes!("../../assets/tree-sitter-javascript.wasm");
+        let bytes: &[u8] = include_bytes!("../../node_modules/tree-sitter-javascript/tree-sitter-javascript.wasm");
         let language = JsFuture::from(Language::load_bytes(&bytes.into())).await?;
         language.unchecked_into::<Language>();
         Ok(())
@@ -41,7 +41,7 @@ async fn field_count() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        assert_eq!(35, language.field_count());
+        assert_eq!(34, language.field_count());
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -52,7 +52,7 @@ async fn node_kind_count() {
     async fn inner() -> Result<(), JsValue> {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
-        assert_eq!(248, language.node_kind_count());
+        assert_eq!(246, language.node_kind_count());
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -87,7 +87,7 @@ async fn id_for_node_kind() {
         let language = crate::util::language::load().await?;
         let kind = "export_statement";
         let named = true;
-        assert_eq!(126, language.id_for_node_kind(kind, named));
+        assert_eq!(125, language.id_for_node_kind(kind, named));
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -99,7 +99,7 @@ async fn node_kind_for_id() {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
         let kind_id = 125;
-        assert_eq!(Some("program".into()), language.node_kind_for_id(kind_id));
+        assert_eq!(Some("export_statement".into()), language.node_kind_for_id(kind_id));
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -126,9 +126,9 @@ async fn node_kind_is_visible() {
         crate::util::parser::init().await?;
         let language = crate::util::language::load().await?;
         let kind_id = 223;
-        assert_eq!(false, language.node_kind_is_visible(kind_id));
-        let kind_id = 224;
         assert_eq!(true, language.node_kind_is_visible(kind_id));
+        let kind_id = 224;
+        assert_eq!(false, language.node_kind_is_visible(kind_id));
         let kind_id = 225;
         assert_eq!(false, language.node_kind_is_visible(kind_id));
         Ok(())

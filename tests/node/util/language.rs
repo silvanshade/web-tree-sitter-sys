@@ -29,7 +29,8 @@ pub(crate) async fn query() -> Result<(Parser, Language, Query), JsValue> {
 pub(crate) fn url(language: &str) -> Result<String, Box<dyn Error>> {
     let mut path = PathBuf::new();
     path.push(env!("CARGO_MANIFEST_DIR"));
-    path.push("assets");
+    path.push("node_modules");
+    path.push("tree-sitter-javascript");
     path.push(format!("tree-sitter-{}.wasm", language));
     let path = match path.into_os_string().into_string() {
         Ok(path) => Ok::<_, Box<dyn Error>>(path),
