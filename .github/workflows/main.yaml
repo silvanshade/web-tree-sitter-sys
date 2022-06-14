@@ -58,6 +58,8 @@ jobs:
         with:
           profile: minimal
           components: clippy
+      - name: Install node dependencies
+        run: npm ci
       - name: Run cargo clippy
         uses: actions-rs/clippy-check@v1
         with:
