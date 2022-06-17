@@ -6,4 +6,4 @@ authors = ["silvanshade <silvanshade@users.noreply.github.com>"]
 edition = "2018"
 
 [dependencies]
-pico-args = "0.4"
+pico-args = "0.5"
