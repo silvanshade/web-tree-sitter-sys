@@ -5,8 +5,7 @@ use web_tree_sitter_sys::*;
 #[wasm_bindgen_test]
 async fn name() {
     async fn inner() -> Result<(), JsValue> {
-        crate::util::parser::init().await?;
-        let parser = Parser::new()?;
+        let parser = Parser::new().await?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"
@@ -36,8 +35,7 @@ async fn name() {
 #[wasm_bindgen_test]
 async fn type_() {
     async fn inner() -> Result<(), JsValue> {
-        crate::util::parser::init().await?;
-        let parser = Parser::new()?;
+        let parser = Parser::new().await?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"

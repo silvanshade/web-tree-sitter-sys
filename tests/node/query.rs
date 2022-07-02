@@ -72,8 +72,7 @@ async fn captures() {
 #[wasm_bindgen_test]
 async fn predicates_for_pattern() {
     async fn inner() -> Result<(), JsValue> {
-        crate::util::parser::init().await?;
-        let parser = Parser::new()?;
+        let parser = Parser::new().await?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"

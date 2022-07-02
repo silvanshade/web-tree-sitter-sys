@@ -18,15 +18,25 @@ codegen-units = 1
 lto = "fat"
 opt-level = "z"
 
+[features]
+default = ["node"]
+node = []
+web = ["web-sys"]
+
 [dependencies]
+futures = "0.3.21"
 js-sys = "0.3"
 wasm-bindgen = { version = "=0.2.81", features = ["strict-macro"] }
+wasm-bindgen-futures = "0.4"
 
 [dependencies.web-sys]
+optional = true
 version = "0.3"
+features = [
+  "Window",
+]
 
 [dev-dependencies]
-wasm-bindgen-futures = "0.4"
 wasm-bindgen-test = "0.3"
 
 [workspace]

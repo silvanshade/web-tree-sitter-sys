@@ -1,20 +1,17 @@
 use std::{error::Error, path::PathBuf};
-use wasm_bindgen::{prelude::*, JsCast};
-use wasm_bindgen_futures::*;
+use wasm_bindgen::prelude::*;
 use web_tree_sitter_sys::*;
 
 pub(crate) async fn load() -> Result<Language, JsValue> {
     let id = "javascript";
     let url = crate::util::language::url(id);
     let url = url.unwrap_or_else(|_| panic!("failed to obtain url for language '{}'", id));
-    let language = JsFuture::from(Language::load_path(&url)).await?;
-    let language = language.unchecked_into::<Language>();
+    let language = Language::load_path(&url).await?;
     Ok(language)
 }
 
 pub(crate) async fn query() -> Result<(Parser, Language, Query), JsValue> {
-    crate::util::parser::init().await?;
-    let parser = Parser::new()?;
+    let parser = Parser::new().await?;
     let language = crate::util::language::load().await?;
     parser.set_language(Some(&language))?;
     let query = r###"

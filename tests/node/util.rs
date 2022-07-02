@@ -15,6 +15,5 @@ extern {
 }
 
 pub(crate) mod language;
-pub(crate) mod parser;
 pub(crate) mod syntax_node;
 pub(crate) mod tree;
