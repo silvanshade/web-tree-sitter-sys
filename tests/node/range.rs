@@ -5,6 +5,7 @@ use web_tree_sitter_sys::*;
 #[wasm_bindgen_test]
 async fn new() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let _range = <Range as Default>::default();
         Ok(())
     }
@@ -14,6 +15,7 @@ async fn new() {
 #[wasm_bindgen_test]
 async fn start_position() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let range = <Range as Default>::default();
         let _start_position = range.start_position();
         Ok(())
@@ -24,6 +26,7 @@ async fn start_position() {
 #[wasm_bindgen_test]
 async fn end_position() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let range = <Range as Default>::default();
         let _end_position = range.end_position();
         Ok(())
@@ -34,6 +37,7 @@ async fn end_position() {
 #[wasm_bindgen_test]
 async fn start_index() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let range = <Range as Default>::default();
         let _start_index = range.start_index();
         Ok(())
@@ -44,6 +48,7 @@ async fn start_index() {
 #[wasm_bindgen_test]
 async fn end_index() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let range = <Range as Default>::default();
         let _end_index = range.end_index();
         Ok(())

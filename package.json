@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "web-tree-sitter": "^0.20.5"
+    "web-tree-sitter-wasm-bindgen": "silvanshade/web-tree-sitter-wasm-bindgen"
   },
   "devDependencies": {
     "tree-sitter-cli": "^0.20.0",

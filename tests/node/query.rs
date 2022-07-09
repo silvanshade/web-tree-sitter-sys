@@ -5,6 +5,7 @@ use web_tree_sitter_sys::*;
 #[wasm_bindgen_test]
 async fn capture_names() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let (_, _, query) = crate::util::language::query().await?;
         assert_eq!(
             vec!["fn-def".into(), "fn-ref".into()].into_boxed_slice(),
@@ -18,6 +19,7 @@ async fn capture_names() {
 #[wasm_bindgen_test]
 async fn delete() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let (_, _, query) = crate::util::language::query().await?;
         query.delete();
         Ok(())
@@ -28,6 +30,7 @@ async fn delete() {
 #[wasm_bindgen_test]
 async fn matches() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let (parser, _, query) = crate::util::language::query().await?;
         let tree = {
             let input = "function one() { two(); function three() {} }".into();
@@ -50,6 +53,7 @@ async fn matches() {
 #[wasm_bindgen_test]
 async fn captures() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let (parser, _, query) = crate::util::language::query().await?;
         let tree = {
             let input = "function one() { two(); function three() {} }".into();
@@ -72,7 +76,8 @@ async fn captures() {
 #[wasm_bindgen_test]
 async fn predicates_for_pattern() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let query = r###"

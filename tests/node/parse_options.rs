@@ -5,6 +5,7 @@ use web_tree_sitter_sys::*;
 #[wasm_bindgen_test]
 async fn new() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let _options = <ParseOptions as Default>::default();
         Ok(())
     }
@@ -14,6 +15,7 @@ async fn new() {
 #[wasm_bindgen_test]
 async fn included_ranges() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let options = <ParseOptions as Default>::default();
         let _included_ranges = options.included_ranges();
         Ok(())

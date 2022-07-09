@@ -7,11 +7,23 @@ use js_sys::{Array, Error, Function, JsString, Object, Promise, Reflect, Uint8Ar
 use wasm_bindgen::{prelude::*, JsCast};
 use wasm_bindgen_futures::JsFuture;
 
-#[wasm_bindgen(
-    inline_js = "async function import_tree_sitter(path) { const module = await import(path); return module; }"
-)]
-extern {
-    fn import_tree_sitter(path: JsString) -> Promise;
+trait JsValueExt {
+    type Value;
+    fn lift_error(self) -> Result<Self::Value, JsError>;
+}
+
+impl<T> JsValueExt for Result<T, JsValue> {
+    type Value = T;
+
+    fn lift_error(self) -> Result<Self::Value, JsError> {
+        self.map_err(|err| {
+            let message = match err.dyn_into::<Error>() {
+                Ok(error) => error.message(),
+                Err(value) => JsString::from(value),
+            };
+            JsError::new(&String::from(message))
+        })
+    }
 }
 
 #[cfg(feature = "node")]
@@ -19,38 +31,50 @@ extern {
 extern {
     #[wasm_bindgen(js_name = "global")]
     static GLOBAL: Object;
+}
 
-    fn require(id: &JsString) -> JsValue;
+#[cfg(feature = "node")]
+#[wasm_bindgen(module = "web-tree-sitter-wasm-bindgen")]
+extern {
+    fn initialize_tree_sitter() -> Promise;
 }
 
 thread_local! {
     // Ensure `web-tree-sitter` is only initialized once
-    static INITIALIZED: RefCell<bool> = RefCell::new(false);
+    static TREE_SITTER_INITIALIZED: RefCell<bool> = RefCell::new(false);
 }
 
-struct TreeSitter;
+pub struct TreeSitter;
 
 impl TreeSitter {
-    async fn init() -> Result<(), JsValue> {
+    #[cfg(feature = "node")]
+    pub async fn init() -> Result<(), JsError> {
         #![allow(non_snake_case)]
 
         // Exit early if `web-tree-sitter` is already initialized
-        if INITIALIZED.with(|cell| *cell.borrow()) {
+        if TREE_SITTER_INITIALIZED.with(|cell| *cell.borrow()) {
             return Ok(());
         }
 
-        #[cfg(feature = "node")]
-        let path = "web-tree-sitter".into();
+        JsFuture::from(initialize_tree_sitter()).await.lift_error()?;
 
-        #[cfg(feature = "node")]
-        let scope = &GLOBAL;
-        #[cfg(feature = "web")]
+        // Set `web-tree-sitter` to initialized
+        TREE_SITTER_INITIALIZED.with(|cell| cell.replace(true));
+
+        Ok(())
+    }
+
+    #[cfg(feature = "web")]
+    pub async fn init() -> Result<(), JsError> {
+        #![allow(non_snake_case)]
+
+        // Exit early if `web-tree-sitter` is already initialized
+        if TREE_SITTER_INITIALIZED.with(|cell| *cell.borrow()) {
+            return Ok(());
+        }
+
         let scope = &web_sys::window().unwrap_throw();
 
-        #[cfg(feature = "node")]
-        let tree_sitter = require(&path);
-
-        #[cfg(feature = "web")]
         let tree_sitter = Reflect::get(&scope, &"TreeSitter".into()).and_then(|property| {
             if property.is_undefined() {
                 let message = "window.TreeSitter is not defined; load the tree-sitter javascript module first";
@@ -61,20 +85,34 @@ impl TreeSitter {
         })?;
 
         // Call `init` from `web-tree-sitter` to initialize emscripten
-        let init = Reflect::get(&tree_sitter, &"init".into())?.unchecked_into::<Function>();
-        JsFuture::from(init.call0(&JsValue::UNDEFINED)?.unchecked_into::<Promise>()).await?;
+        let init = Reflect::get(&tree_sitter, &"init".into())
+            .lift_error()?
+            .unchecked_into::<Function>();
+        JsFuture::from(
+            init.call0(&JsValue::UNDEFINED)
+                .lift_error()?
+                .unchecked_into::<Promise>(),
+        )
+        .await
+        .lift_error()?;
 
-        let Language = Reflect::get(&tree_sitter, &"Language".into())?;
+        let Language = Reflect::get(&tree_sitter, &"Language".into()).lift_error()?;
         let Parser = tree_sitter;
 
         // Manually define `Parser` and `Language` in a fashion that works with wasm-bindgen
-        Reflect::set(scope, &"Parser".into(), &Parser)?;
-        Reflect::set(scope, &"Language".into(), &Language)?;
+        Reflect::set(scope, &"Parser".into(), &Parser).lift_error()?;
+        Reflect::set(scope, &"Language".into(), &Language).lift_error()?;
 
         // Set `web-tree-sitter` to initialized
-        INITIALIZED.with(|cell| cell.replace(true));
+        TREE_SITTER_INITIALIZED.with(|cell| cell.replace(true));
 
         Ok(())
+    }
+
+    fn init_guard() {
+        if !TREE_SITTER_INITIALIZED.with(|cell| *cell.borrow()) {
+            wasm_bindgen::throw_str("TreeSitter::init must be called to initialize the library");
+        }
     }
 }
 
@@ -217,18 +255,20 @@ extern {
 }
 
 impl Language {
-    pub async fn load_bytes(bytes: &Uint8Array) -> Result<Language, JsValue> {
-        TreeSitter::init().await?;
+    pub async fn load_bytes(bytes: &Uint8Array) -> Result<Language, LanguageError> {
+        TreeSitter::init_guard();
         JsFuture::from(Language::__load_bytes(bytes))
             .await
             .map(JsCast::unchecked_into)
+            .map_err(JsCast::unchecked_into)
     }
 
-    pub async fn load_path(path: &str) -> Result<Language, JsValue> {
-        TreeSitter::init().await?;
+    pub async fn load_path(path: &str) -> Result<Language, LanguageError> {
+        TreeSitter::init_guard();
         JsFuture::from(Language::__load_path(path))
             .await
             .map(JsCast::unchecked_into)
+            .map_err(JsCast::unchecked_into)
     }
 }
 
@@ -906,8 +946,8 @@ extern {
 }
 
 impl Parser {
-    pub async fn new() -> Result<Parser, JsValue> {
-        TreeSitter::init().await?;
+    pub fn new() -> Result<Parser, ParserError> {
+        TreeSitter::init_guard();
         let result = Parser::__new()?;
         Ok(result)
     }

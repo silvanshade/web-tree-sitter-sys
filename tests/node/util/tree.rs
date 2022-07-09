@@ -8,7 +8,7 @@ pub(crate) async fn cursor() -> Result<Option<TreeCursor>, JsValue> {
 }
 
 pub(crate) async fn make() -> Result<Option<Tree>, JsValue> {
-    let parser = Parser::new().await?;
+    let parser = Parser::new()?;
     let language = crate::util::language::load().await?;
     parser.set_language(Some(&language))?;
     let tree = {

@@ -5,6 +5,7 @@ use web_tree_sitter_sys::*;
 #[wasm_bindgen_test]
 async fn new() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let _point = <Point as Default>::default();
         Ok(())
     }
@@ -14,6 +15,7 @@ async fn new() {
 #[wasm_bindgen_test]
 async fn row() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let point = <Point as Default>::default();
         let _row = point.row();
         Ok(())
@@ -24,6 +26,7 @@ async fn row() {
 #[wasm_bindgen_test]
 async fn column() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let point = <Point as Default>::default();
         let _column = point.column();
         Ok(())

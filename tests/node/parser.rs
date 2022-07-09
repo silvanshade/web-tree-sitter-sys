@@ -8,7 +8,8 @@ use web_tree_sitter_sys::*;
 #[wasm_bindgen_test]
 async fn new() {
     async fn inner() -> Result<(), JsValue> {
-        let _parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let _parser = Parser::new()?;
         Ok(())
     }
     assert!(inner().await.is_ok());
@@ -17,7 +18,8 @@ async fn new() {
 #[wasm_bindgen_test]
 async fn delete() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         parser.delete();
         Ok(())
     }
@@ -27,7 +29,8 @@ async fn delete() {
 #[wasm_bindgen_test]
 async fn parse_with_function() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let clo = Closure::wrap(Box::new(move |_, _, _| None) as Box<InputClosureType>);
@@ -46,7 +49,8 @@ async fn parse_with_function() {
 #[wasm_bindgen_test]
 async fn parse_with_string() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
         let _tree = {
@@ -63,7 +67,8 @@ async fn parse_with_string() {
 #[wasm_bindgen_test]
 async fn reset() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         parser.reset();
         Ok(())
     }
@@ -73,7 +78,8 @@ async fn reset() {
 #[wasm_bindgen_test]
 async fn set_get_language() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
 
         parser.set_language(Some(&language))?;
@@ -90,7 +96,8 @@ async fn set_get_language() {
 #[wasm_bindgen_test]
 async fn set_get_logger() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         let language = crate::util::language::load().await?;
         parser.set_language(Some(&language))?;
 
@@ -110,7 +117,8 @@ async fn set_get_logger() {
 #[wasm_bindgen_test]
 async fn set_get_timeout_micros() {
     async fn inner() -> Result<(), JsValue> {
-        let parser = Parser::new().await?;
+        TreeSitter::init().await?;
+        let parser = Parser::new()?;
         parser.set_timeout_micros(1000f64);
         assert!((1000f64 - parser.get_timeout_micros()).abs() < std::f64::EPSILON);
         Ok(())

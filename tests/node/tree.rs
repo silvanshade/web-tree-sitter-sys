@@ -1,9 +1,11 @@
 use wasm_bindgen::prelude::*;
 use wasm_bindgen_test::*;
+use web_tree_sitter_sys::*;
 
 #[wasm_bindgen_test]
 async fn copy() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let tree = crate::util::tree::make().await?.unwrap();
         let _tree = tree.copy();
         Ok(())
@@ -14,6 +16,7 @@ async fn copy() {
 #[wasm_bindgen_test]
 async fn delete() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let tree = crate::util::tree::make().await?.unwrap();
         tree.delete();
         Ok(())
@@ -24,6 +27,7 @@ async fn delete() {
 #[wasm_bindgen_test]
 async fn edit() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let tree = crate::util::tree::make().await?.unwrap();
         let edit = Default::default();
         let _tree = tree.edit(&edit);
@@ -35,6 +39,7 @@ async fn edit() {
 #[wasm_bindgen_test]
 async fn walk() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let tree = crate::util::tree::make().await?.unwrap();
         let _cursor = tree.walk();
         Ok(())
@@ -45,6 +50,7 @@ async fn walk() {
 #[wasm_bindgen_test]
 async fn get_changed_ranges() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let this = crate::util::tree::make().await?.unwrap();
         let that = this.copy();
         let _changed = this.get_changed_ranges(&that);
@@ -56,6 +62,7 @@ async fn get_changed_ranges() {
 #[wasm_bindgen_test]
 async fn get_language() {
     async fn inner() -> Result<(), JsValue> {
+        TreeSitter::init().await?;
         let tree = crate::util::tree::make().await?.unwrap();
         let _language = tree.get_language();
         Ok(())
