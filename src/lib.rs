@@ -28,10 +28,10 @@ thread_local! {
     static INITIALIZED: RefCell<bool> = RefCell::new(false);
 }
 
-pub struct TreeSitter;
+struct TreeSitter;
 
 impl TreeSitter {
-    pub async fn init() -> Result<(), JsValue> {
+    async fn init() -> Result<(), JsValue> {
         #![allow(non_snake_case)]
 
         // Exit early if `web-tree-sitter` is already initialized
@@ -860,7 +860,7 @@ extern {
     // Constructor
 
     #[wasm_bindgen(catch, constructor)]
-    pub fn __new() -> Result<Parser, ParserError>;
+    fn __new() -> Result<Parser, ParserError>;
 
     // Instance Methods
 
