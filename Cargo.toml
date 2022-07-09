@@ -1,7 +1,7 @@
 [package]
 edition = "2021"
 name = "web-tree-sitter-sys"
-version = "1.2.0"
+version = "1.3.0"
 authors = ["<silvanshade@users.noreply.github.com>"]
 license = "Apache-2.0 WITH LLVM-exception"
 readme = "README.md"
@@ -24,7 +24,6 @@ node = []
 web = ["web-sys"]
 
 [dependencies]
-futures = "0.3.21"
 js-sys = "0.3"
 wasm-bindgen = { version = "=0.2.81", features = ["strict-macro"] }
 wasm-bindgen-futures = "0.4"
