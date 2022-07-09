@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["web_tree_sitter_sys"];
